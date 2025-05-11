@@ -1,0 +1,427 @@
+:root {
+    --primary-color: rgb(90, 130, 30);
+    --primary-color-darker: rgb(75, 110, 25);
+    --secondary-color: silver;
+    --text-color: #333;
+    --background-color: #fff;
+    --light-gray: #f8f8f8;
+    --border-color: #eee;
+    --header-height-normal: 130px;
+    --header-height-small: 80px;
+    
+  }
+
+  body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: var(--text-color);
+      /* line-height: 1.6; */ /* Đã xoá */
+      background-color: var(--background-color);
+  }
+
+  .container {
+      width: 90%;
+      max-width: 1140px; /* Limit maximum width for larger screens */
+      margin: 0 auto; /* Center the container */
+      padding: 0 15px; /* Add padding on the sides */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+      /* font-family: var(--heading-font-family); */ /* Đã xoá */
+      color: var(--primary-color);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+  }
+
+  a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+  }
+
+  a:hover {
+      color: var(--primary-color-darker);
+  }
+
+  img {
+      max-width: 100%;
+      height: auto;
+      display: block; /* Remove extra space below images */
+  }
+
+/* === Header === */
+.site-header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    z-index: 1000; /* Ensure header stays on top */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: height 0.3s ease, padding 0.3s ease;
+  }
+  
+  .header-normal {
+    height: var(--header-height-normal);
+  }
+  
+  .header-small {
+    height: var(--header-height-small);
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out logo, nav, actions */
+    height: 100%; /* Make container fill header height */
+    max-width: 1200px; /* Wider container for header */
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .logo-link {
+    display: inline-block; /* Prevents taking full width */
+  }
+  
+  .logo-img {
+    height: calc(var(--header-height-normal) - 40px); /* Adjust logo size based on header */
+    width: auto;
+    transition: height 0.3s ease;
+  }
+  
+  .header-small .logo-img {
+    height: calc(var(--header-height-small) - 20px);
+  }
+  
+  /* === Navigation === */
+  .main-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .main-nav .nav-link {
+    align-items: center;
+    display: inline-flex;
+    padding: 10px 18px; /* Increased padding */
+    text-align: left;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--secondary-color);
+    border-bottom: 3px solid transparent; /* Space for active indicator */
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+  
+  .main-nav .nav-link:hover {
+    color: var(--primary-color);
+  }
+  
+  .main-nav .nav-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color); /* Visual indicator for active link */
+  }
+  
+  /* === Header Actions (Facebook, Login) === */
+  .header-actions {
+    display: flex; /* Arrange buttons horizontally */
+    align-items: center; /* Vertically align items */
+    gap: 15px; /* Space between buttons */
+  }
+  
+  /* General style for action buttons */
+  .social-link {
+    display: inline-flex; /* Use flex for alignment if icon+text */
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px; /* Default border radius */
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    padding: 8px 15px; /* Default padding */
+    text-decoration: none;
+    font-size: 14px; /* Default font size */
+  }
+  
+  /* Specific style for Facebook button */
+  .facebook-button {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    background-image: url('/IMAGES/logo_facebook.png'); /* Path to FB logo */
+    background-size: contain; /* Ensure logo fits */
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-indent: -9999px; /* Hide text if only icon */
+    overflow: hidden;
+    padding: 0; /* Remove padding for icon-only button */
+    border-radius: 50%; /* Make it circular */
+  }
+  
+  /* Specific style for Login button */
+  .login-button {
+    background-color: var(--primary-color); /* Use primary color */
+    color: white; /* White text */
+    /* Add icon styles here if needed */
+  }
+  
+  /* Hover effects */
+  .social-link:hover {
+    opacity: 0.8; /* General hover effect */
+  }
+  
+  .login-button:hover {
+    background-color: var(--primary-color-darker); /* Darker background on hover */
+    opacity: 1; /* Ensure full opacity on hover */
+    color: white; /* Ensure text color remains white */
+  }
+  
+  /* === Responsive Design for Header === */
+  /* Medium screens (tablets) */
+  @media (max-width: 992px) {
+    .header-container {
+      padding: 0 15px;
+    }
+    .main-nav .nav-link {
+      padding: 10px 12px;
+    }
+  }
+  
+  /* Small screens (landscape phones, small tablets) */
+  @media (max-width: 768px) {
+    .header-normal, .header-small {
+      height: auto; /* Let height adjust to content */
+      padding: 10px 0; /* Add padding for smaller headers */
+    }
+    .header-container {
+      flex-direction: column; /* Stack items vertically */
+      padding: 15px;
+    }
+    .logo-img {
+      height: 50px; /* Fixed smaller logo */
+      margin-bottom: 10px;
+    }
+    .main-nav {
+      margin-top: 10px;
+      width: 100%;
+      justify-content: center; /* Center nav items */
+      flex-wrap: wrap; /* Allow nav items to wrap */
+      margin-bottom: 10px; /* Add space below nav */
+    }
+    .header-actions { /* Adjust actions block on mobile */
+      margin-top: 15px;
+    }
+    .facebook-button {
+      width: 35px;
+      height: 35px;
+
+    }
+  }
+  
+  /* Extra small screens (portrait phones) */
+  @media (max-width: 576px) {
+    .main-nav .nav-link {
+      padding: 8px 10px;
+    }
+    .header-actions {
+      gap: 10px; /* Reduce gap further on small screens */
+    }
+    .social-link {
+      padding: 6px 12px; /* Slightly smaller padding */
+      font-size: 13px;
+    }
+    .facebook-button {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .introduction-container {
+    padding: 20px;
+    max-width: 1200px; /* Giống header-container */
+    margin: 0 auto;
+}
+
+.intro-hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.intro-hero h1 {
+    font-size: 2.5em; /* Hoặc lớn hơn */
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.intro-hero .subtitle {
+    font-size: 1.2em;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.intro-main-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.mission-vision {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.mission, .vision {
+    flex: 1;
+    background-color: var(--light-gray); /* Hoặc màu nền nhẹ nhàng khác */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.mission h2, .vision h2, .what-we-do h2, .our-impact h2, .get-involved h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center; /* Hoặc căn lề trái tùy thiết kế */
+}
+
+.what-we-do {
+    margin-bottom: 40px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.feature-icon {
+    width: 60px; /* Điều chỉnh kích thước icon */
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.our-impact ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.get-involved {
+    text-align: center;
+    background-color: var(--light-gray);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.cta-buttons {
+    margin-top: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.cta-button.primary:hover {
+    background-color: var(--primary-color-darker);
+}
+
+.cta-button.secondary {
+    background-color: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--light-gray);
+}
+
+/* Responsive adjustments for mission-vision */
+@media (max-width: 768px) {
+    .mission-vision {
+        flex-direction: column;
+    }
+}
+
+ /* === Footer === */
+  .site-footer {
+      background-color: #333; /* Dark background for footer */
+      color: #ccc; /* Light text color */
+      padding: 40px 0 0; /* Padding top, bottom added by footer-bottom */
+      /* font-size: 14px; */ /* Đã xoá */
+  }
+
+  .footer-container {
+      display: flex;
+      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+      justify-content: space-between;
+      gap: 30px; /* Space between footer columns */
+  }
+
+  .footer-info, .footer-nav, .footer-social {
+      flex: 1; /* Allow columns to grow */
+      min-width: 200px; /* Minimum width before wrapping */
+  }
+
+  .site-footer h3, .site-footer h4 {
+      color: white; /* White headings in footer */
+      margin-bottom: 15px;
+      /* font-size: 16px; */ /* Đã xoá */
+      /* font-weight: bold; */ /* Đã xoá */
+  }
+
+  .footer-info p {
+      margin-bottom: 10px;
+      /* line-height: 1.7; */ /* Đã xoá */
+  }
+
+  .footer-info a, .footer-nav a {
+      color: #ccc;
+  }
+
+  .footer-info a:hover, .footer-nav a:hover {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .footer-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .footer-nav li {
+      margin-bottom: 8px;
+  }
+
+  .footer-social .social-link {
+      margin-right: 10px;
+  }
+
+  .footer-bottom {
+      border-top: 1px solid #555; /* Separator line */
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+      /* font-size: 13px; */ /* Đã xoá */
+      color: #aaa;
+  }
+
+  .footer-bottom p {
+      margin: 0;
+  }

@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/public/css/main_bar.css">
+<header class="site-header header-normal">
+        <div class="header-container">
+            <a href="trangchu.ejs" class="logo-link">
+                <img src="/images/logo2.png" alt="Logo Hands of Hope" class="logo-img" style=" border-radius: 30%;">
+                </a>
+
+            <nav class="main-nav">
+                <a class="nav-link trangchu" href="/handofhope/trangchu"><b>Trang Chủ</b></a>
+                <a class="nav-link gioithieu" href="/handofhope/gioi-thieu"><b>Giới thiệu</b></a>
+                <a class="nav-link cachoancanh" href="/handofhope/hanh-trinh"><b>Hành Trình</b></a>  
+                <a class="nav-link lienhe" href="/handofhope/lien-he"><b>Liên hệ</b></a>          
+                <a class="nav-link quyengop" href="/handofhope/quyen-gop"><b>Quyên góp</b></a>    
+            </nav>
+
+            <div class="header-actions">
+                <a href="https://www.facebook.com/quoc.le.trung.2025" class="social-link facebook-button" target="_blank" rel="noopener noreferrer" aria-label="Trang Facebook của chúng tôi">
+                    </a>
+                <a href="/HTML/login.html" class="social-link login-button" aria-label="Đăng nhập">
+                    Đăng nhập
+                </a>
+            </div>
+        </div>
+</header>
+<script>
+    // Function cho header scroll (giữ nguyên)
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.site-header');
+            if (!header) return;
+
+            const scrollThreshold = 170;
+            function updateHeaderOnScroll() {
+                if (window.scrollY > scrollThreshold) {
+                    header.classList.remove('header-normal');
+                    header.classList.add('header-small');
+                } else {
+                    header.classList.remove('header-small');
+                    header.classList.add('header-normal');
+                }
+            }
+            window.addEventListener('scroll', updateHeaderOnScroll);
+            updateHeaderOnScroll();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname; // Lấy toàn bộ path, ví dụ: "/handofhope/trangchu"
+            const navLinks = document.querySelectorAll('.main-nav .nav-link');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active'); // Xóa class active khỏi tất cả các link trước
+
+                const linkHref = link.getAttribute('href');
+
+                // So sánh trực tiếp currentPath với href của link
+                if (linkHref === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+</script>
