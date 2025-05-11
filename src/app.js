@@ -38,6 +38,10 @@ app.get('/login', (req, res) => {
     // Ví dụ: src/views/login.ejs
     res.render('login', { pageTitle: 'Đăng Nhập - Hands of Hope' }); // Truyền dữ liệu nếu cần
 });
+app.get('/register', (req, res) => {
+
+    res.render('register', { pageTitle: 'Đăng Kí - Hands of Hope' }); // Truyền dữ liệu nếu cần
+});
 
 
 

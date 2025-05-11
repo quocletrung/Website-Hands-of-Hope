@@ -1,0 +1,139 @@
+/* === Biến và Style cơ bản (Copy từ trangchu.css nếu cần) === */
+:root {
+    --primary-color: rgb(90, 130, 30);
+    --primary-color-darker: rgb(75, 110, 25);
+    --text-color: #333;
+    --background-color: #f8f8f8; /* Nền nhạt hơn cho trang đăng nhập */
+    --light-gray: #fff; /* Dùng màu trắng cho form */
+    --border-color: #ddd;
+    --header-height-small: 80px; /* Chiều cao header nhỏ */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Font phổ biến */
+    color: var(--text-color);
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo footer luôn ở cuối trang */
+}
+
+.container {
+    width: 90%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color-darker);
+    text-decoration: underline;
+}
+
+
+
+/* === Main Content - Login Form === */
+.login-page-main {
+    flex-grow: 1; /* Giúp main content chiếm không gian còn lại */
+    display: flex;
+    justify-content: center; /* Căn giữa form theo chiều ngang */
+    align-items: center; /* Căn giữa form theo chiều dọc */
+    padding: 40px 20px; /* Padding cho khu vực main */
+}
+
+.login-container {
+    background-color: var(--light-gray); /* Nền trắng cho form */
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Giới hạn chiều rộng tối đa của form */
+    text-align: center;
+}
+
+.login-container h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Căn trái label và input */
+}
+
+.form-group label {
+    display: block; /* Label chiếm một dòng riêng */
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%; /* Input chiếm toàn bộ chiều rộng */
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box; /* Tính cả padding và border vào width */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none; /* Bỏ viền focus mặc định */
+    box-shadow: 0 0 0 2px rgba(90, 130, 30, 0.2); /* Hiệu ứng focus nhẹ */
+}
+
+.form-actions {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.login-submit-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Nút chiếm full width */
+}
+
+.login-submit-button:hover {
+    background-color: var(--primary-color-darker);
+    transform: translateY(-2px);
+}
+
+.form-links {
+    font-size: 14px;
+    color: #777;
+}
+
+.form-links a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.form-links a:hover {
+    color: var(--primary-color-darker);
+}
+
+.form-links span {
+    margin: 0 10px; /* Khoảng cách cho dấu | */
+}

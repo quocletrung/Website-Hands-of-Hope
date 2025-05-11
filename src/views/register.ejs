@@ -1,5 +1,33 @@
  <link rel="stylesheet" href="/css/main_bar.css">  
-
+<link rel="stylesheet" href="/css/login.css">
    
    <%- include('partials/navigation_bar.ejs') %>
-    <%- include('partials/footer.ejs') %>
+    <main class="login-page-main">
+        <div class="login-container">
+            <h2>Đăng ký tài khoản mới</h2>
+            <form action="/xu-ly-dang-ky" method="POST"> <div class="form-group">
+                    <label for="fullname">Họ và Tên:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password" required>
+                    </div>
+                <div class="form-group">
+                    <label for="confirm_password">Xác nhận mật khẩu:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="login-submit-button">Đăng ký</button>
+                </div>
+                <div class="form-links">
+                    <span>Bạn đã có tài khoản? <a href="/login">Đăng nhập ngay</a></span>
+                </div>
+            </form>
+        </div>
+    </main>
+   <%- include('partials/footer.ejs') %>
