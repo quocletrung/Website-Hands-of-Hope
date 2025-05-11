@@ -12,11 +12,10 @@ app.set('view engine', 'ejs');
 // Bỏ 'src/' vì __dirname đã trỏ tới D:\CharityWeb\src rồi
 app.set('views', path.join(__dirname, 'views'));
 
-// Cấu hình thư mục public (giả sử thư mục public nằm ở D:\CharityWeb\public)
-// Bạn cần đi lên một cấp từ __dirname (D:\CharityWeb\src) để tới thư mục gốc (D:\CharityWeb)
-// rồi mới vào public
+
 app.use(express.static(path.join(__dirname, '../public')));
-// Route để render trangchu
+
+
 app.get('/handofhope/trangchu', (req, res) => {
     res.render('trangchu',{ pageTitle: 'Trang Chủ - Hands of Hope' }); // Express sẽ tìm trangchu.ejs trong D:\CharityWeb\src\views
 });
@@ -33,7 +32,14 @@ app.get('/handofhope/quyen-gop', (req, res) => {
     res.render('quyengop', { pageTitle: 'Quyên Góp - Hands of Hope' });
 });
 
-// ... phần còn lại của app.js ...
+
+app.get('/login', (req, res) => {
+    // Giả sử tệp login.ejs của bạn nằm trong thư mục views đã được cấu hình
+    // Ví dụ: src/views/login.ejs
+    res.render('login', { pageTitle: 'Đăng Nhập - Hands of Hope' }); // Truyền dữ liệu nếu cần
+});
+
+
 
 const port = 3000; // Hoặc cổng của bạn
 app.listen(port, () => {
