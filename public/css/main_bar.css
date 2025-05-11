@@ -67,7 +67,9 @@
       display: flex;
       align-items: center;
   }
-
+  .nav-link {
+    transition: font-size 0.3s ease;
+    }
   .main-nav .nav-link {
       align-items: center;
       display: inline-flex;
@@ -82,11 +84,13 @@
 
   .main-nav .nav-link:hover {
       color: var(--primary-color);
+      font-size: 1.2em;
   }
 
   .main-nav .nav-link.active {
       color: var(--primary-color);
       border-bottom-color: var(--primary-color); /* Visual indicator for active link */
+      font-size: 1.2em;
   }
 
   /* === Header Actions (Facebook, Login) === */
