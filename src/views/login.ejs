@@ -5,6 +5,9 @@
    <main class="login-page-main">
         <div class="login-container">
             <h2>Đăng nhập tài khoản</h2>
+            <% if (typeof error !== 'undefined') { %>
+    <div style="color: red; margin-bottom: 15px;"><%= error %></div>
+<% } %>
             <form action="/xu-ly-dang-nhap" method="POST"> <div class="form-group">
                     <label for="username">Tên đăng nhập hoặc Email :</label>
                     <input type="text" id="username" name="username" required>
