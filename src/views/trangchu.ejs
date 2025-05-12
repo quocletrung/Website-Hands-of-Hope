@@ -68,29 +68,29 @@
                                     </a>
                                 </div>
                                 <div class="partner-item">
-                                    <a href="#" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://www.samsung.com/vn/" target="_blank" rel="noopener noreferrer">
                                         <img src="/IMAGES/samsung.png" alt="Đối tác 2">
                                     </a>
                                 </div>
                                 <div class="partner-item">
-                                    <a href="#" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://www.vinamilk.com.vn/" target="_blank" rel="noopener noreferrer">
                                         <img src="/IMAGES/logo_vinamilkk.png" alt="Đối tác 3">
                                     </a>
                                 </div>
                             </div>
                             <div class="partner-slide-page">
                                 <div class="partner-item">
-                                    <a href="#" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://vingroup.net/" target="_blank" rel="noopener noreferrer">
                                         <img src="/IMAGES/logo_vingroup.png" alt="Đối tác 4">
                                     </a>
                                 </div>
                                 <div class="partner-item">
-                                    <a href="#" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/1234.png" alt="Đối tác 5">
+                                    <a href="https://www.nike.com/vn/" target="_blank" rel="noopener noreferrer">
+                                        <img src="/IMAGES/nike.png" alt="Đối tác 5">
                                     </a>
                                 </div>
                                 <div class="partner-item">
-                                    <a href="#" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://www.yakult.vn/" target="_blank" rel="noopener noreferrer">
                                         <img src="/IMAGES/logo_yaku.png" alt="Đối tác 6">
                                     </a>
                                 </div>
@@ -318,7 +318,49 @@
             wheelContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
             wheelContainer.addEventListener('mouseleave', () => autoSlideInterval = setInterval(nextSlide, 4400));
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderWrapper = document.querySelector('.partners-slider-wrapper');
+            if (sliderWrapper) {
+                const track = sliderWrapper.querySelector('.partners-slider-track');
+                const slides = Array.from(track.querySelectorAll('.partner-slide-page'));
+                const prevButton = sliderWrapper.querySelector('#partnerPrevBtn');
+                const nextButton = sliderWrapper.querySelector('#partnerNextBtn');
+                let currentSlideIndex = 0;
 
+                if (slides.length > 0 && prevButton && nextButton) {
+                    function updateSlider() {
+                        track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+                        slides.forEach((slide, index) => {
+                            slide.classList.toggle('active', index === currentSlideIndex);
+                        });
+                        if (slides.length <= 1) {
+                            prevButton.disabled = true;
+                            nextButton.disabled = true;
+                        } else {
+                            prevButton.disabled = false; 
+                            nextButton.disabled = false; 
+                        }
+                    }
+
+                    prevButton.addEventListener('click', function() {
+                        currentSlideIndex--;
+                        if (currentSlideIndex < 0) {
+                            currentSlideIndex = slides.length - 1; 
+                        }
+                        updateSlider();
+                    });
+
+                    nextButton.addEventListener('click', function() {
+                        currentSlideIndex++;
+                        if (currentSlideIndex >= slides.length) {
+                            currentSlideIndex = 0; 
+                        }
+                        updateSlider();
+                    });
+                    updateSlider();
+                }
+            }
+        });
 </script>
 </body>
 </html>
