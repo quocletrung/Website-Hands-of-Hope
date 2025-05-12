@@ -146,3 +146,70 @@
       opacity: 1; /* Ensure full opacity on hover */
       color: white; /* Ensure text color remains white */
   }
+  /* === Styles for Logged-in User Info === */
+.header-actions .user-info {
+    display: flex;       /* Sắp xếp avatar, tên, nút logout theo hàng ngang */
+    align-items: center; /* Căn giữa các mục theo chiều dọc */
+    gap: 15px;           /* Khoảng cách giữa link profile và nút logout */
+}
+
+/* Style cho liên kết bao quanh avatar và tên */
+.header-actions .user-info .profile-link {
+    display: flex;          /* Sắp xếp avatar và tên theo hàng ngang */
+    align-items: center;    /* Căn giữa avatar và tên theo chiều dọc */
+    text-decoration: none;  /* Bỏ gạch chân của liên kết */
+    color: var(--text-color); /* Màu chữ mặc định */
+    transition: opacity 0.3s ease; /* Hiệu ứng mờ khi hover */
+}
+
+.header-actions .user-info .profile-link:hover {
+    opacity: 0.7; /* Giảm độ trong suốt khi hover */
+}
+
+/* Style cho ảnh Avatar */
+.header-actions .user-info .avatar-img {
+    width: 35px;            /* Chiều rộng avatar */
+    height: 35px;           /* Chiều cao avatar */
+    border-radius: 50%;     /* Bo tròn ảnh thành hình tròn */
+    margin-right: 8px;      /* Khoảng cách giữa avatar và tên */
+    object-fit: cover;      /* Đảm bảo ảnh không bị méo, cắt vừa khung */
+    border: 1px solid var(--border-color); /* Thêm viền nhẹ nếu muốn */
+}
+
+/* Style cho Tên người dùng */
+.header-actions .user-info .user-name {
+    font-weight: bold; /* In đậm tên */
+    font-size: 14px;      /* Kích thước chữ tương tự các nút khác */
+}
+
+/* Style cho nút Đăng xuất */
+/* Kế thừa từ .social-link nhưng có thể tuỳ chỉnh thêm */
+.header-actions .logout-button {
+    background-color: #6c757d; /* Màu xám làm ví dụ */
+    color: white;
+    padding: 8px 15px;      /* Đồng bộ padding với nút login */
+    border-radius: 5px;     /* Đồng bộ bo góc */
+    font-size: 14px;        /* Đồng bộ kích thước chữ */
+    /* Không cần kế thừa từ .social-link nếu không muốn các style mặc định của nó */
+}
+
+.header-actions .logout-button:hover {
+    background-color: #5a6268; /* Màu xám đậm hơn khi hover */
+    opacity: 1;               /* Đảm bảo không bị mờ đi */
+}
+
+/* Style cho nút Đăng ký (nếu bạn thêm vào) */
+/* Kế thừa từ .social-link */
+.header-actions .register-button {
+    background-color: transparent; /* Nền trong suốt */
+    color: var(--primary-color); /* Màu chữ là màu chính */
+    border: 1px solid var(--primary-color); /* Viền màu chính */
+    padding: 7px 14px; /* Padding nhỏ hơn một chút do có border */
+}
+
+.header-actions .register-button:hover {
+    background-color: var(--primary-color-darker); /* Nền đổi màu khi hover */
+    color: white;             /* Chữ đổi thành màu trắng */
+    border-color: var(--primary-color-darker);
+    opacity: 1;
+}
