@@ -82,10 +82,20 @@ app.get('/handofhope/lien-he', (req, res) => {
 app.get('/handofhope/quyen-gop', (req, res) => {
     res.render('quyengop', { pageTitle: 'Quyên Góp - Hands of Hope' });
 });
+app.get('/api/leaderboard', async (req, res) => { // Hoặc router.get(...) nếu là file riêng
+    try {
+        const topUsers = await User.findAll({
+            attributes: ['id', 'username', 'full_name', 'avatar_url', 'volunpoints'], // Chỉ lấy các trường cần thiết
+            order: [['volunpoints', 'DESC']], // Sắp xếp giảm dần theo volunpoints
+            limit: 5 // Lấy top 10 users, bạn có thể thay đổi số lượng
+        });
+        res.json(topUsers);
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu bảng xếp hạng:", error);
+        res.status(500).json({ message: "Lỗi máy chủ khi lấy bảng xếp hạng." });
+    }
+});
 
-// Route /handofhope/profile này có thể sẽ bị trùng lặp với /profile do profileRoutes xử lý.
-// Xem xét việc chỉ dùng một route profile chính.
-// Nếu vẫn muốn giữ, đảm bảo logic không xung đột.
 app.get('/handofhope/profile', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');

@@ -2,10 +2,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/main_bar.css">  
-    <link rel="stylesheet" href="/css/trangchu.css">  
+    <link rel="stylesheet" href="/css/trangchu.css">
+    <link rel="stylesheet" href="/css/leaderboard.css">
 
 <body>
     <%- include('partials/navigation_bar.ejs') %>
+    <%- include('partials/leaderboard.ejs') %>
     <main>
         <section class="hero-slider">
             <div class="wheel-container">
@@ -232,7 +234,11 @@
                 </div>
         </div>
     </section>
+    <script src="/js/leaderboard.js"></script>
+
+    
     <%- include('partials/footer.ejs') %>
+
     <script>
     // Function cho header scroll (giữ nguyên)
         

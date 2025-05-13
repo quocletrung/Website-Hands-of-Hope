@@ -1,0 +1,126 @@
+/* public/css/leaderboard.css */
+.leaderboard-popup-container {
+    position: fixed; /* Quan trọng: để cố định khi cuộn */
+    top: 150px;       /* Khoảng cách từ phía trên trang */
+    left: 0px;      /* Khoảng cách từ phía trái trang */
+    width: 250px;    /* Chiều rộng cố định */
+    max-height: calc(100vh - 40px); /* Chiều cao tối đa, trừ đi khoảng cách top và bottom */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Đảm bảo nó nổi lên trên các phần tử khác */
+    display: flex; /* Sử dụng flexbox để quản lý layout bên trong */
+    flex-direction: column; /* Các phần tử con xếp chồng lên nhau */
+    overflow: hidden; /* Để bo tròn các góc hoạt động đúng với overflow-y: auto */
+    font-family: Arial, sans-serif;
+}
+
+/* Các CSS khác cho .leaderboard-header, .leaderboard-list, .leaderboard-item, v.v. giữ nguyên như trước */
+
+.leaderboard-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Không cần border-top-left-radius và border-top-right-radius ở đây
+       vì .leaderboard-popup-container đã có border-radius và overflow: hidden */
+}
+
+.leaderboard-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    white-space: nowrap; /* Ngăn tiêu đề xuống dòng nếu quá dài */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close-leaderboard-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+}
+.close-leaderboard-button:hover {
+    opacity: 0.8;
+}
+
+.leaderboard-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto; /* Cho phép cuộn nếu danh sách dài */
+    flex-grow: 1;     /* Phần này sẽ co giãn để lấp đầy không gian còn lại */
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 20px;
+    text-align: right;
+    color: #555;
+}
+
+.leaderboard-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.leaderboard-user-info {
+    flex-grow: 1;
+    overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
+}
+
+.leaderboard-user-info .name {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 2px;
+    white-space: nowrap; /* Ngăn tên xuống dòng */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Hiển thị ... nếu tên quá dài */
+}
+
+.leaderboard-user-info .points {
+    font-size: 0.9em;
+    color: #e85a00;
+}
+ .leaderboard-user-info .points strong {
+    color: #c04b00;
+}
+
+
+.leaderboard-loading,
+.leaderboard-error {
+    padding: 20px;
+    text-align: center;
+    color: #777;
+}
+.leaderboard-footer {
+    font-size: 0.8em;
+    color: #888;
+    text-align: center;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    /* Không cần border-bottom-left-radius và border-bottom-right-radius ở đây */
+}
