@@ -1,64 +1,111 @@
-<h2>Thay đổi Avatar</h2>
-<form id="avatarUploadForm" action="/user/upload-avatar" method="POST" enctype="multipart/form-data">
-    <div>
-        <label for="avatarInput">Chọn ảnh đại diện mới:</label>
-        <input type="file" id="avatarInput" name="avatar" accept="image/*" required>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= user.full_name || user.username %> - Hồ sơ</title>
+    <link rel="stylesheet" href="/css/main_bar.css"> <link rel="stylesheet" href="/css/profile.css">   </head>
+<body>
+    <%- include('partials/navigation_bar.ejs') %>
+
+    <div class="profile-page-container">
+        <h2>Hồ Sơ Cá Nhân</h2>
+
+        <% if (typeof success_msg !== 'undefined' && success_msg) { %>
+            <div class="message success-message"><%= success_msg %></div>
+        <% } %>
+        <% if (typeof error_msg !== 'undefined' && error_msg) { %>
+            <div class="message error-message"><%= error_msg %></div>
+        <% } %>
+
+        <div class="profile-header">
+            <img src="<%= user.avatar_url || '/images/default-avatar.png' %>" alt="Avatar" class="avatar" id="avatarPreview">
+            <h2><%= user.full_name %></h2>
+            <p><%= user.email %> | <%= user.username %></p>
+            <p class="status">
+                <% if (!user.is_active) { %>
+                    <span class="inactive">Tài khoản chưa kích hoạt</span>
+                <% } else { %>
+                    Đã kích hoạt
+                <% } %>
+                | Vai trò: <%= user.role %>
+            </p>
+        </div>
+
+        <div class="profile-info">
+            <p><span class="label">Bio:</span> <%- user.bio || 'Chưa cập nhật' %></p>
+            <p><span class="label">Vị trí:</span> <%= user.location || 'Chưa cập nhật' %></p>
+            <p><span class="label">Điểm tình nguyện:</span> <%= user.volunpoints || 0 %></p>
+            <p><span class="label">Ngày tạo:</span> <%= new Date(user.created_at).toLocaleDateString('vi-VN') %></p>
+            <p><span class="label">Cập nhật gần nhất:</span> <%= new Date(user.updated_at).toLocaleDateString('vi-VN') %></p>
+        </div>
+
+        <div class="profile-section">
+            <h3>Thay đổi Ảnh đại diện</h3>
+            <form action="/profile/update-avatar" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="avatarFile">Chọn ảnh mới:</label>
+                    <input type="file" id="avatarFile" name="avatar" accept="image/*" required>
+                    <small>Hỗ trợ: JPG, PNG, GIF. Tối đa 2MB.</small>
+                </div>
+                <button type="submit">Cập nhật Ảnh</button>
+            </form>
+        </div>
+
+        <div class="profile-section">
+            <h3>Cập nhật Thông tin</h3>
+            <form action="/profile/update-info" method="POST">
+                <div class="form-group">
+                    <label for="fullName">Họ và tên:</label>
+                    <input type="text" id="fullName" name="full_name" value="<%= user.full_name || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Tiểu sử (Bio):</label>
+                    <textarea id="bio" name="bio"><%= user.bio || '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="location">Vị trí:</label>
+                    <input type="text" id="location" name="location" value="<%= user.location || '' %>">
+                </div>
+                <button type="submit">Lưu Thay Đổi</button>
+            </form>
+        </div>
+
+        <div class="profile-section">
+            <h3>Thay đổi Mật khẩu</h3>
+            <form action="/profile/change-password" method="POST">
+                <div class="form-group">
+                    <label for="currentPassword">Mật khẩu hiện tại:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Mật khẩu mới:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Xác nhận mật khẩu mới:</label>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                </div>
+                <button type="submit">Đổi Mật Khẩu</button>
+            </form>
+        </div>
     </div>
-    <button type="submit">Tải lên</button>
-</form>
 
-<img id="currentAvatar" src="<%= user.avatarUrl || '/images/default-avatar.png' %>" alt="Avatar hiện tại" width="150">
-<div id="previewContainer" style="margin-top: 10px;">
-    <img id="avatarPreview" src="#" alt="Xem trước ảnh" width="150" style="display: none;">
-</div>
-
-<script>
-    // (Tùy chọn) Xem trước ảnh trước khi upload
-    const avatarInput = document.getElementById('avatarInput');
-    const avatarPreview = document.getElementById('avatarPreview');
-    const previewContainer = document.getElementById('previewContainer');
-
-    if (avatarInput) {
-        avatarInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarPreview.src = e.target.result;
-                    avatarPreview.style.display = 'block';
+    <%- include('partials/footer.ejs') %> <script>
+        const avatarFileInput = document.getElementById('avatarFile');
+        const avatarPreview = document.getElementById('avatarPreview');
+        if (avatarFileInput && avatarPreview) {
+            avatarFileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        avatarPreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
                 }
-                reader.readAsDataURL(file);
-            } else {
-                avatarPreview.src = '#';
-                avatarPreview.style.display = 'none';
-            }
-        });
-    }
-
-    // (Tùy chọn) Xử lý form submit bằng AJAX để không reload trang
-    // const avatarUploadForm = document.getElementById('avatarUploadForm');
-    // if (avatarUploadForm) {
-    //     avatarUploadForm.addEventListener('submit', async function(event) {
-    //         event.preventDefault();
-    //         const formData = new FormData(this);
-    //         try {
-    //             const response = await fetch('/user/upload-avatar', { // Hoặc URL route của bạn
-    //                 method: 'POST',
-    //                 body: formData
-    //             });
-    //             const result = await response.json();
-    //             if (response.ok) {
-    //                 alert(result.message);
-    //                 document.getElementById('currentAvatar').src = result.avatarUrl; // Cập nhật avatar mới
-    //                 avatarPreview.style.display = 'none'; // Ẩn preview
-    //                 this.reset(); // Reset form
-    //             } else {
-    //                 alert('Lỗi: ' + result.message);
-    //             }
-    //         } catch (error) {
-    //             console.error('Lỗi khi upload avatar:', error);
-    //             alert('Đã xảy ra lỗi. Vui lòng thử lại.');
-    //         }
-    //     });
-    // }
-</script>
+            });
+        }
+    </script>
+</body>
+</html>
