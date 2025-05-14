@@ -61,4 +61,5 @@ const User = sequelize.define('User', {
     updatedAt: 'updated_at'
 });
 
+
 module.exports = User;

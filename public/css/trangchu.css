@@ -1001,3 +1001,13 @@
         text-align: center;
     }
 }
+
+.green-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
