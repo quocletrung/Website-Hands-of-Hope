@@ -10,6 +10,7 @@ const { Op } = require('sequelize');
 const sequelize = require('./config/database');
 const User = require('./models/User');
 const VolunteerPost = require('./models/VolunteerPost'); // Model cho bài đăng tình nguyện
+const adminRoutes = require('./routes/adminRoutes'); // Đảm bảo đã bỏ comment
 
 const app = express(); // Khởi tạo app Express
 
@@ -58,7 +59,9 @@ console.log("Đã khởi tạo res.locals middleware.");
 
 // --- Sử dụng các Router đã tách ---
 app.use('/profile', profileRoutes);
-app.use('/volunteer', volunteerRoutes); // Sử dụng volunteerRoutes cho các đường dẫn bắt đầu bằng /volunteer
+app.use('/volunteer', volunteerRoutes); 
+app.use('/admin', adminRoutes);
+// Sử dụng volunteerRoutes cho các đường dẫn bắt đầu bằng /volunteer
 // app.use('/admin', adminRoutes); // Bỏ comment nếu bạn đã tạo và muốn dùng adminRoutes
 
 // --- Định nghĩa Routes còn lại trong app.js ---
@@ -75,8 +78,8 @@ app.get('/handofhope/gioi-thieu', (req, res) => {
 app.get('/handofhope/hanh-trinh', async (req, res) => {
     try {
         const posts = await VolunteerPost.findAll({
-            where: { status: 'approved' }, // Chỉ hiển thị bài đã được duyệt nếu có hệ thống duyệt
-            order: [['createdAt', 'DESC']], // Sắp xếp theo 'createdAt' thay vì 'created_at' nếu model dùng camelCase
+            where: { status: 'approved' },
+            order: [['created_at', 'DESC']], // Sửa lại đúng tên cột trong DB
             include: [
                 { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
             ]
@@ -98,6 +101,7 @@ app.get('/handofhope/quyen-gop', (req, res) => {
 app.get('/handofhope/profile', (req, res) => {
     res.render('profile', { pageTitle: 'Profile - Hands of Hope' });
 });
+
 // API cho bảng xếp hạng
 app.get('/api/leaderboard', async (req, res) => {
     try {

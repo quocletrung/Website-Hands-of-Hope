@@ -21,11 +21,22 @@ router.get('/dang-bai', requireLogin, (req, res) => {
 // POST: Xử lý đăng bài
 router.post('/dang-bai', requireLogin, async (req, res) => {
     const { title, content, image_url, location, event_date } = req.body;
-    await VolunteerPost.create({
-        title, content, image_url, location, event_date,
-        created_by: req.session.user.id
-    });
-    res.redirect('/handofhope/hanh-trinh'); // Trả về trang hanhtrinh
+    try {
+        await VolunteerPost.create({
+            title,
+            content,
+            image_url,
+            location,
+            event_date,
+            created_by: req.session.user.id
+            // Không cần set 'status' ở đây, model sẽ tự đặt là 'pending'
+        });
+        // req.flash('success_msg', 'Bài đăng của bạn đã được gửi và đang chờ duyệt!');
+        res.redirect('/handofhope/hanh-trinh'); // Hoặc trang cá nhân của user
+    } catch (error) {
+        console.error("Lỗi khi đăng bài tình nguyện:", error);
+        // ... (xử lý lỗi)
+    }
 });
 
 // GET: Danh sách bài tuyển

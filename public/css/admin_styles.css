@@ -1,0 +1,163 @@
+/* public/css/admin-styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; /* Light background for the entire page */
+}
+
+#wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+#sidebar-wrapper {
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #212529; /* Darker Bootstrap theme color */
+    color: #adb5bd;
+    transition: margin-left 0.3s;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 1rem 1.25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 1px solid #343a40;
+}
+
+#sidebar-wrapper .list-group-item {
+    border: none;
+    padding: 0.85rem 1.25rem;
+    color: #ced4da; /* Lighter text for better contrast */
+    background-color: transparent; /* Transparent background for items */
+    border-left: 4px solid transparent; /* For active state indicator */
+}
+
+#sidebar-wrapper .list-group-item:hover,
+#sidebar-wrapper .list-group-item.active {
+    color: #fff;
+    background-color: #343a40; /* Slightly lighter dark for hover/active */
+    border-left-color: #0d6efd; /* Bootstrap primary color */
+}
+
+#sidebar-wrapper .list-group-item i.fa-fw { /* FontAwesome fixed width */
+    margin-right: 0.75rem;
+}
+
+#page-content-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens if content overflows */
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}
+
+.navbar.admin-navbar {
+    background-color: #fff; /* White navbar */
+    border-bottom: 1px solid #dee2e6; /* Light border */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+}
+
+.navbar.admin-navbar .navbar-brand,
+.navbar.admin-navbar .nav-link {
+    color: #212529;
+}
+
+.navbar.admin-navbar .nav-link:hover {
+    color: #0d6efd;
+}
+
+.admin-section {
+    display: none; /* Hide all sections by default */
+    padding: 20px;
+}
+
+.admin-section.active {
+    display: block; /* Show active section */
+}
+
+.page-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.page-header h2 {
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.card-header.bg-primary { /* Ensuring Bootstrap's primary color is used */
+    background-color: #0d6efd !important;
+    color: white;
+}
+
+.table th {
+    background-color: #e9ecef;
+    font-weight: 500; /* Slightly bolder table headers */
+}
+
+.btn-action {
+    margin-right: 5px;
+}
+
+.status-published {
+    color: #198754; /* Bootstrap success green */
+    font-weight: bold;
+}
+
+.status-draft {
+    color: #ffc107; /* Bootstrap warning yellow */
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #0dcaf0; /* Bootstrap info cyan */
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545; /* Bootstrap danger red */
+    font-weight: bold;
+}
+
+
+/* Modal styling */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-weight: 500;
+}
+
+/* Responsive Sidebar Toggle Button */
+#menu-toggle {
+    border: none;
+    background-color: transparent;
+    color: #0d6efd;
+}
+#menu-toggle:hover {
+    color: #0b5ed7;
+}
+
+@media (min-width: 768px) { /* On medium screens and up, hide the toggle button */
+    #menu-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) { /* On small screens, sidebar starts hidden */
+    #sidebar-wrapper {
+        margin-left: -250px;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0;
+    }
+    #page-content-wrapper {
+        width: 100%; /* Ensure full width on small screens */
+    }
+}
