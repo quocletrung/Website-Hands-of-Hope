@@ -79,15 +79,24 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
     try {
         const posts = await VolunteerPost.findAll({
             where: { status: 'approved' },
-            order: [['created_at', 'DESC']], // Sửa lại đúng tên cột trong DB
+            order: [['created_at', 'DESC']],
             include: [
                 { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
             ]
         });
-        res.render('hanhtrinh', { pageTitle: 'Hành Trình - Hands of Hope', posts });
+        res.render('hanhtrinh', {
+            pageTitle: 'Hành Trình - Hands of Hope',
+            posts,
+            success_msg: req.query.success_msg,
+            error_msg: req.query.error_msg
+        });
     } catch (error) {
         console.error("Lỗi khi lấy bài đăng hành trình:", error);
-        res.status(500).render('hanhtrinh', { pageTitle: 'Hành Trình - Hands of Hope', posts: [], error: "Không thể tải danh sách bài đăng." });
+        res.status(500).render('hanhtrinh', {
+            pageTitle: 'Hành Trình - Hands of Hope',
+            posts: [],
+            error: "Không thể tải danh sách bài đăng."
+        });
     }
 });
 

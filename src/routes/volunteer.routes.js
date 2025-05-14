@@ -29,13 +29,11 @@ router.post('/dang-bai', requireLogin, async (req, res) => {
             location,
             event_date,
             created_by: req.session.user.id
-            // Không cần set 'status' ở đây, model sẽ tự đặt là 'pending'
         });
-        // req.flash('success_msg', 'Bài đăng của bạn đã được gửi và đang chờ duyệt!');
-        res.redirect('/handofhope/hanh-trinh'); // Hoặc trang cá nhân của user
+        res.redirect('/handofhope/hanh-trinh?success_msg=' + encodeURIComponent('Đăng bài thành công!'));
     } catch (error) {
         console.error("Lỗi khi đăng bài tình nguyện:", error);
-        // ... (xử lý lỗi)
+        res.redirect('/handofhope/hanh-trinh?error_msg=' + encodeURIComponent('Đăng bài thất bại. Vui lòng thử lại!'));
     }
 });
 

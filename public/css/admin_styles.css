@@ -1,7 +1,9 @@
 /* public/css/admin-styles.css */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa; /* Light background for the entire page */
+    background-color: #f8f9fa;
+    color: #343a40; /* Màu chữ chính cho body, dễ đọc hơn */
 }
 
 #wrapper {
@@ -9,155 +11,336 @@ body {
     min-height: 100vh;
 }
 
+/* --- Sidebar Enhancements --- */
 #sidebar-wrapper {
-    min-width: 250px;
-    max-width: 250px;
-    background-color: #212529; /* Darker Bootstrap theme color */
-    color: #adb5bd;
-    transition: margin-left 0.3s;
+    min-width: 260px; /* Tăng nhẹ độ rộng */
+    max-width: 260px;
+    background-color: #2c3e50; /* Một màu tối khác, ví dụ: xanh navy đậm */
+    color: #bdc3c7; /* Màu chữ nhẹ hơn cho sidebar */
+    transition: margin-left 0.3s ease-in-out; /* Easing cho hiệu ứng mượt mà hơn */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ cho sidebar */
 }
 
 #sidebar-wrapper .sidebar-heading {
-    padding: 1rem 1.25rem;
-    font-size: 1.25rem;
+    padding: 1.2rem 1.5rem; /* Tăng padding */
+    font-size: 1.3rem; /* Tăng kích thước chữ */
     font-weight: bold;
-    color: #fff;
-    border-bottom: 1px solid #343a40;
+    color: #ecf0f1; /* Màu chữ sáng hơn cho heading */
+    background-color: #34495e; /* Nền đậm hơn cho heading */
+    border-bottom: 1px solid #4a627a; /* Đường kẻ rõ hơn */
+}
+#sidebar-wrapper .sidebar-heading i {
+    margin-right: 10px; /* Khoảng cách cho icon heading */
 }
 
 #sidebar-wrapper .list-group-item {
     border: none;
-    padding: 0.85rem 1.25rem;
-    color: #ced4da; /* Lighter text for better contrast */
-    background-color: transparent; /* Transparent background for items */
-    border-left: 4px solid transparent; /* For active state indicator */
+    padding: 1rem 1.5rem; /* Tăng padding cho item */
+    color: #bdc3c7;
+    background-color: transparent;
+    border-left: 5px solid transparent; /* Tăng độ dày border active */
+    transition: all 0.2s ease-in-out; /* Hiệu ứng cho hover và active */
+    font-size: 0.95rem; /* Điều chỉnh kích thước chữ menu */
 }
 
-#sidebar-wrapper .list-group-item:hover,
+#sidebar-wrapper .list-group-item:hover {
+    color: #ffffff;
+    background-color: #34495e; /* Màu nền khi hover */
+    border-left-color: #1abc9c; /* Màu accent khác khi hover (ví dụ: xanh ngọc) */
+}
+
 #sidebar-wrapper .list-group-item.active {
-    color: #fff;
-    background-color: #343a40; /* Slightly lighter dark for hover/active */
-    border-left-color: #0d6efd; /* Bootstrap primary color */
+    color: #ffffff;
+    background-color: #1abc9c; /* Màu nền active nổi bật */
+    border-left-color: #f1c40f; /* Màu border active khác (ví dụ: vàng) */
+    font-weight: 500;
 }
 
-#sidebar-wrapper .list-group-item i.fa-fw { /* FontAwesome fixed width */
-    margin-right: 0.75rem;
+#sidebar-wrapper .list-group-item i.fa-fw {
+    margin-right: 0.85rem;
+    width: 20px; /* Đảm bảo icon thẳng hàng */
 }
 
-#page-content-wrapper {
-    flex-grow: 1;
-    width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scroll on small screens if content overflows */
-}
-
-#wrapper.toggled #sidebar-wrapper {
-    margin-left: -250px;
-}
-
+/* --- Navbar Enhancements --- */
 .navbar.admin-navbar {
-    background-color: #fff; /* White navbar */
-    border-bottom: 1px solid #dee2e6; /* Light border */
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0; /* Border mỏng hơn, nhẹ nhàng hơn */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ hơn */
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
 }
+
+.navbar.admin-navbar #menu-toggle {
+    color: #34495e; /* Màu cho nút toggle */
+    padding: 0.5rem 1rem;
+}
+.navbar.admin-navbar #menu-toggle:hover {
+    color: #1abc9c;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
 
 .navbar.admin-navbar .navbar-brand,
 .navbar.admin-navbar .nav-link {
-    color: #212529;
+    color: #343a40; /* Màu chữ đậm hơn cho navbar */
+}
+.navbar.admin-navbar .navbar-brand {
+    font-weight: 500;
 }
 
 .navbar.admin-navbar .nav-link:hover {
-    color: #0d6efd;
+    color: #1abc9c; /* Sử dụng màu accent */
 }
 
+.navbar.admin-navbar .dropdown-menu {
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1); /* Bóng đổ cho dropdown */
+    border-radius: 0.3rem; /* Bo góc nhẹ */
+}
+.navbar.admin-navbar .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #1abc9c;
+}
+.navbar.admin-navbar .dropdown-item i {
+    margin-right: 8px;
+}
+
+
+/* --- Page Content Wrapper --- */
+#page-content-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #f4f6f9; /* Màu nền content hơi khác body để tạo khối */
+    padding-top: 1.5rem; /* Padding trên cho content */
+}
+
+/* --- Section Styling & Page Header --- */
 .admin-section {
-    display: none; /* Hide all sections by default */
-    padding: 20px;
+    display: none;
+    /* padding: 20px; - Bỏ padding ở đây, thêm vào container bên trong nếu cần */
 }
-
 .admin-section.active {
-    display: block; /* Show active section */
+    display: block;
 }
 
 .page-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 2rem; /* Tăng khoảng cách dưới */
+    padding-bottom: 1rem; /* Tăng padding dưới */
     border-bottom: 1px solid #dee2e6;
 }
 
 .page-header h2 {
-    font-size: 1.75rem;
-    font-weight: 500;
+    font-size: 1.85rem; /* Tăng kích thước chữ */
+    font-weight: 600; /* Đậm hơn */
+    color: #343a40;
+}
+.page-header h2 i {
+    color: #1abc9c; /* Màu accent cho icon tiêu đề */
+    margin-right: 10px;
 }
 
-.card-header.bg-primary { /* Ensuring Bootstrap's primary color is used */
-    background-color: #0d6efd !important;
-    color: white;
+/* --- Card Enhancements (Dashboard) --- */
+.card {
+    border: none; /* Bỏ border mặc định của card */
+    border-radius: 0.5rem; /* Bo góc nhiều hơn */
+    box-shadow: 0 0 20px rgba(0,0,0,0.08); /* Bóng đổ mềm mại hơn */
+    margin-bottom: 1.5rem;
 }
 
-.table th {
+.card .card-body {
+    padding: 1.5rem; /* Tăng padding cho card body */
+}
+
+.card .text-xs {
+    font-size: 0.8rem; /* Kích thước chữ nhỏ hơn cho label card */
+    font-weight: 600;
+}
+.card .h5, .card .h4, .card .h3 { /* Tùy chỉnh kích thước số liệu trong card */
+    font-weight: 700;
+    color: #343a40;
+}
+.card .col-auto i {
+    color: #e0e0e0 !important; /* Màu icon trong card nhẹ nhàng hơn */
+}
+
+/* Custom border colors for cards */
+.card.border-left-primary {
+    border-left: 5px solid #0d6efd; /* Bootstrap primary */
+}
+.card.border-left-success {
+    border-left: 5px solid #198754; /* Bootstrap success */
+}
+.card.border-left-info {
+    border-left: 5px solid #0dcaf0; /* Bootstrap info */
+}
+.card.border-left-warning {
+    border-left: 5px solid #ffc107; /* Bootstrap warning */
+}
+.card.border-left-danger {
+    border-left: 5px solid #dc3545; /* Bootstrap danger */
+}
+
+
+/* --- Table Enhancements --- */
+.table-responsive {
+    border-radius: 0.3rem; /* Bo góc cho vùng table responsive */
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+.table {
+    margin-bottom: 0; /* Bỏ margin dưới của table nếu nó nằm trong .table-responsive */
+}
+.table th, .table td {
+    vertical-align: middle;
+    padding: 0.9rem; /* Tăng padding cho cell */
+}
+
+.table thead.table-light th { /* table-light là class của Bootstrap */
     background-color: #e9ecef;
-    font-weight: 500; /* Slightly bolder table headers */
+    color: #495057;
+    font-weight: 600; /* Đậm hơn cho header table */
+    border-bottom: 2px solid #dee2e6; /* Đường kẻ đậm hơn dưới header */
 }
 
-.btn-action {
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa; /* Màu nền khi hover row */
+}
+
+/* Nút hành động trong bảng */
+.table .btn-action {
+    padding: 0.3rem 0.6rem; /* Padding nhỏ hơn cho nút trong bảng */
+    font-size: 0.8rem;
     margin-right: 5px;
 }
-
-.status-published {
-    color: #198754; /* Bootstrap success green */
-    font-weight: bold;
+.table .btn-info {
+    background-color: #5bc0de;
+    border-color: #46b8da;
 }
-
-.status-draft {
-    color: #ffc107; /* Bootstrap warning yellow */
-    font-weight: bold;
+.table .btn-info:hover {
+    background-color: #31b0d5;
+    border-color: #269abc;
 }
-
-.status-pending {
-    color: #0dcaf0; /* Bootstrap info cyan */
-    font-weight: bold;
+.table .btn-danger {
+    background-color: #d9534f;
+    border-color: #d43f3a;
 }
-
-.status-rejected {
-    color: #dc3545; /* Bootstrap danger red */
-    font-weight: bold;
+.table .btn-danger:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
 }
 
 
-/* Modal styling */
+/* --- Status Badge Styling --- */
+.status-published, .status-draft, .status-pending, .status-rejected {
+    padding: 0.35em 0.65em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+.status-published { background-color: #198754; } /* Bootstrap success green */
+.status-draft { background-color: #ffc107; color: #000; } /* Bootstrap warning yellow, chữ đen cho dễ đọc */
+.status-pending { background-color: #0dcaf0; } /* Bootstrap info cyan */
+.status-rejected { background-color: #dc3545; } /* Bootstrap danger red */
+
+
+/* --- Form Elements Enhancements --- */
+.form-control, .form-select {
+    border-radius: 0.3rem; /* Bo góc cho input */
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.85rem; /* Tăng padding */
+}
+.form-control:focus, .form-select:focus {
+    border-color: #1abc9c; /* Màu accent khi focus */
+    box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.25); /* Bóng đổ khi focus với màu accent */
+}
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Button Enhancements (Ngoài bảng) --- */
+.btn {
+    border-radius: 0.3rem; /* Bo góc chung cho button */
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+.btn-primary {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+}
+.btn-primary:hover {
+    background-color: #16a085;
+    border-color: #16a085;
+}
+/* Tùy chỉnh thêm cho .btn-secondary, .btn-danger nếu cần */
+
+
+/* --- Modal Styling --- */
+.modal-content {
+    border-radius: 0.5rem; /* Bo góc cho modal */
+    border: none;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,.2);
+}
 .modal-header {
     background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
 }
-
-.modal-title {
-    font-weight: 500;
-}
-
-/* Responsive Sidebar Toggle Button */
-#menu-toggle {
+.modal-header .btn-close {
+    background: none;
     border: none;
-    background-color: transparent;
-    color: #0d6efd;
+    font-size: 1.2rem;
 }
-#menu-toggle:hover {
-    color: #0b5ed7;
+.modal-title {
+    font-weight: 600; /* Đậm hơn cho tiêu đề modal */
+    font-size: 1.25rem;
+}
+.modal-body {
+    padding: 1.5rem;
+}
+.modal-footer {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
 }
 
-@media (min-width: 768px) { /* On medium screens and up, hide the toggle button */
-    #menu-toggle {
-        display: none;
-    }
-}
-
-@media (max-width: 767.98px) { /* On small screens, sidebar starts hidden */
-    #sidebar-wrapper {
-        margin-left: -250px;
-    }
-    #wrapper.toggled #sidebar-wrapper {
+/* --- Responsive Adjustments --- */
+@media (min-width: 768px) {
+    #wrapper:not(.toggled) #sidebar-wrapper { /* Giữ sidebar mở theo mặc định trên màn hình lớn */
         margin-left: 0;
     }
+    #menu-toggle {
+        display: none; /* Ẩn nút toggle trên màn hình lớn nếu sidebar luôn mở */
+    }
+    #wrapper.toggled #sidebar-wrapper { /* Khi toggle trên màn hình lớn */
+        margin-left: -260px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #sidebar-wrapper {
+        margin-left: -260px; /* Sidebar ẩn theo mặc định */
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0; /* Hiện sidebar khi toggle */
+    }
     #page-content-wrapper {
-        width: 100%; /* Ensure full width on small screens */
+        width: 100%;
+    }
+    .page-header h2 {
+        font-size: 1.5rem; /* Giảm kích thước tiêu đề trên màn hình nhỏ */
+    }
+    .card .card-body {
+        padding: 1rem;
+    }
+    .table th, .table td {
+        padding: 0.75rem;
     }
 }
