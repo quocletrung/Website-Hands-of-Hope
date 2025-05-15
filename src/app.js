@@ -32,6 +32,7 @@ console.log("Đã khởi tạo static middleware cho thư mục public.");
 // 2. Đọc dữ liệu từ form (application/x-www-form-urlencoded)
 app.use(express.urlencoded({ extended: true }));
 console.log("Đã khởi tạo urlencoded middleware.");
+app.use(express.json()); // <--- THÊM DÒNG NÀY
 
 // 3. Cấu hình và sử dụng Express Session
 app.use(session({

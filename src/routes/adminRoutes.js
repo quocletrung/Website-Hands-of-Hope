@@ -8,6 +8,7 @@ const sequelize = require('../config/database'); // Thêm dòng này
 // Route chính cho trang admin, render file admin.ejs
 const ExcelJS = require('exceljs');
 const VolunteerJoin = require('../models/VolunteerJoin');
+const nodemailer = require('nodemailer');
 
 router.get('/', isAdmin, (req, res) => {
     // Giả sử file giao diện admin của bạn là 'admin.ejs' và nằm trong 'src/views/'
@@ -68,7 +69,11 @@ router.put('/posts/:id', isAdmin, async (req, res) => {
 
 // Xóa bài
 router.delete('/posts/:id', isAdmin, async (req, res) => {
-    await VolunteerPost.destroy({ where: { id: req.params.id } });
+    const postId = req.params.id;
+    // Xóa các bản ghi VolunteerJoin liên quan trước
+    await VolunteerJoin.destroy({ where: { post_id: postId } });
+    // Sau đó xóa bài post
+    await VolunteerPost.destroy({ where: { id: postId } });
     res.json({ success: true });
 });
 router.get('/users', isAdmin, async (req, res) => {
@@ -172,5 +177,34 @@ router.get('/export/users', isAdmin, async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=nguoidung.xlsx');
     await workbook.xlsx.write(res);
     res.end();
+});
+router.post('/reward', isAdmin, async (req, res) => {
+    const { user_id, message } = req.body;
+    try {
+        const user = await User.findByPk(user_id);
+        if (!user) return res.status(404).json({ message: 'Không tìm thấy người dùng.' });
+
+        // Cấu hình transporter (có thể dùng lại cấu hình từ volunteer.routes.js)
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_APP_PASSWORD
+            }
+        });
+
+        await transporter.sendMail({
+            from: process.env.GMAIL_USER,
+            to: user.email,
+            subject: 'Thư Khen Thưởng Tình Nguyện Viên Tiêu Biểu',
+            html: `<h2>Xin chúc mừng ${user.full_name || user.username}!</h2>
+                   <p>${message}</p>
+                   <p><i>Hands of Hope</i></p>`
+        });
+
+        res.json({ message: 'Đã gửi email khen thưởng thành công!' });
+    } catch (err) {
+        res.status(500).json({ message: 'Gửi email thất bại.' });
+    }
 });
 module.exports = router;

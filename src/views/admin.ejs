@@ -25,8 +25,8 @@
                 <a href="#manage-users" class="list-group-item list-group-item-action nav-link" data-section="manage-users">
                     <i class="fas fa-users fa-fw"></i>Quản Lý Người Dùng
                 </a>
-                <a href="#settings" class="list-group-item list-group-item-action nav-link" data-section="settings">
-                    <i class="fas fa-cogs fa-fw"></i>Cài Đặt
+                <a href="#rewards" class="list-group-item list-group-item-action nav-link" data-section="rewards">
+                    <i class="fas fa-award fa-fw"></i>Khen Thưởng
                 </a>
                 <a href="/logout" class="list-group-item list-group-item-action nav-link mt-auto"> <i class="fas fa-sign-out-alt fa-fw"></i>Đăng Xuất
                 </a>
@@ -174,7 +174,27 @@
                         </nav>
                     </div>
                 </section>
-
+                <section id="rewards-section" class="admin-section">
+    <div class="page-header px-3">
+        <h2><i class="fas fa-award fa-fw"></i> Khen Thưởng Tình Nguyện Viên</h2>
+    </div>
+    <div class="p-3">
+        <form id="rewardForm">
+            <div class="mb-3">
+                <label for="rewardUser" class="form-label">Chọn người dùng tiêu biểu</label>
+                <select class="form-select" id="rewardUser" name="user_id" required>
+                    <!-- Option sẽ được render bằng JS -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="rewardMessage" class="form-label">Nội dung tuyên dương</label>
+                <textarea class="form-control" id="rewardMessage" name="message" rows="4" required>Chúc mừng bạn đã có nhiều đóng góp nổi bật trong tháng!</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Gửi Email Khen Thưởng</button>
+        </form>
+        <div id="rewardResult" class="mt-3"></div>
+    </div>
+</section>
                 <section id="settings-section" class="admin-section">
                     <div class="page-header px-3">
                         <h2><i class="fas fa-cogs fa-fw"></i> Cài Đặt Chung</h2>
@@ -346,26 +366,38 @@
         addPostEventListeners(posts);
     }
 
-    // function addPostEventListeners(posts) {
-    //     document.querySelectorAll('.edit-post-btn').forEach(button => {
-    //         button.addEventListener('click', function() {
-    //             currentEditingPostId = parseInt(this.getAttribute('data-id'));
-    //             const post = posts.find(p => p.id === currentEditingPostId);
-    //             if (post) {
-    //                 postModalLabel.textContent = 'Sửa Bài Đăng';
-    //                 editPostIdInput.value = post.id;
-    //                 document.getElementById('postTitle').value = post.title;
-    //                 document.getElementById('postAuthor').value = post.author ? (post.author.full_name || post.author.username) : '';
-    //                 document.getElementById('postContent').value = post.content;
-    //                 postStatusSelect.value = post.status;
-    //                 handleReasonRejectVisibility();
-    //                 postReasonRejectInput.value = post.reason_reject || '';
-    //                 postModal.show();
-    //             }
-    //         });
-    //     });
-    //     addDeleteItemEventListeners();
-    // }
+   const rewardForm = document.getElementById('rewardForm');
+const rewardUserSelect = document.getElementById('rewardUser');
+const rewardResult = document.getElementById('rewardResult');
+
+async function fetchActiveUsers() {
+    const res = await fetch('/admin/users');
+    const users = await res.json();
+    return users.filter(u => u.is_active);
+}
+
+async function renderRewardUsers() {
+    const users = await fetchActiveUsers();
+    rewardUserSelect.innerHTML = users.map(u =>
+        `<option value="${u.id}">${u.full_name || u.username} (${u.username})</option>`
+    ).join('');
+}
+if (rewardForm) {
+    renderRewardUsers();
+    rewardForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(rewardForm);
+        const data = Object.fromEntries(formData.entries());
+        const res = await fetch('/admin/reward', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        rewardResult.textContent = result.message || (res.ok ? 'Đã gửi email khen thưởng!' : 'Có lỗi xảy ra.');
+        rewardResult.className = res.ok ? 'alert alert-success' : 'alert alert-danger';
+    });
+}
 
     postStatusSelect.addEventListener('change', handleReasonRejectVisibility);
     function handleReasonRejectVisibility() {
