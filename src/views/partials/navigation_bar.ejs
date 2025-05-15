@@ -16,7 +16,7 @@
         <div class="header-actions">
             <% if (typeof user !== 'undefined' && user) { %>
                 <div class="user-info" style="display: flex; align-items: center;">
-                    <a href="/handofhope/profile" style="display: flex; align-items: center; text-decoration: none; color: inherit; margin-right: 15px;">
+                    <a href="/profile" style="display: flex; align-items: center; text-decoration: none; color: inherit; margin-right: 15px;">
                         
                         <span class="user-name" style="font-weight: bold;"><%= user.full_name || user.username %></span>&nbsp;&nbsp;
                         <% if (user.avatar_url) { %>
