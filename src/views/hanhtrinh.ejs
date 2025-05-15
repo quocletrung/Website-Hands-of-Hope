@@ -4,7 +4,14 @@
 <link rel="stylesheet" href="/css/trangchu.css">
 <link rel="stylesheet" href="/css/hanhtrinh.css">
 
+<link rel="stylesheet" href="/css/leaderboard.css">
+<%- include('partials/leaderboard.ejs') %>
+
+
 <% var posts = typeof posts !== 'undefined' ? posts : []; %>
+
+
+
 
 <main class="hanhtrinh-container">
     <% if (typeof success_msg !== 'undefined') { %>

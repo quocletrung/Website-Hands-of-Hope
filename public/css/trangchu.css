@@ -182,7 +182,7 @@
 
   .wheel-container {
       width: 100%; /* Make slider full width */
-       height: 580px; /* Let height be determined by image aspect ratio */
+       height: 620px; /* Let height be determined by image aspect ratio */
       aspect-ratio: 16 / 7; /* Example aspect ratio, adjust as needed */
       position: relative;
       overflow: hidden;

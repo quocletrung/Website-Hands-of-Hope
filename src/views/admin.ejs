@@ -105,12 +105,14 @@
                         <h2><i class="fas fa-newspaper fa-fw"></i> Quản Lý Bài Đăng Tình Nguyện</h2>
                     </div>
                     <div class="p-3">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- <div class="d-flex justify-content-between align-items-center mb-3">
                             <input type="text" class="form-control w-50" id="searchPosts" placeholder="Tìm kiếm bài đăng...">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPostModal">
                                 <i class="fas fa-plus"></i> Thêm Bài Đăng Mới
                             </button>
-                        </div>
+                        </div> -->
+                        <button class="btn btn-success mb-3" id="exportPostsExcel"><i class="fas fa-file-excel"></i> Xuất Excel Hoạt Động</button>
+
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered align-middle">
                                 <thead class="table-light">
@@ -143,7 +145,8 @@
                     </div>
                     <div class="p-3">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <input type="text" class="form-control w-50" id="searchUsers" placeholder="Tìm kiếm người dùng...">
+                            <!-- <input type="text" class="form-control w-50" id="searchUsers" placeholder="Tìm kiếm người dùng..."> -->
+                             <button class="btn btn-success mb-3" id="exportUsersExcel"><i class="fas fa-file-excel"></i> Xuất Excel Người Dùng</button>
                             </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered align-middle">
@@ -259,262 +262,230 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const sidebarLinks = document.querySelectorAll('#sidebar-wrapper .nav-link');
-            const adminSections = document.querySelectorAll('.admin-section');
-            const pageTitleElement = document.getElementById('page-title');
-            const menuToggle = document.getElementById('menu-toggle');
-            const wrapper = document.getElementById('wrapper');
+    const navLinks = document.querySelectorAll('#sidebar-wrapper .nav-link[data-section]');
+    const sections = document.querySelectorAll('.admin-section');
 
-            // Dữ liệu mẫu (bạn sẽ thay thế bằng API call khi có backend)
-            let samplePosts = [
-                { id: 1, title: 'Chung tay xây trường cho trẻ vùng cao', author: 'nguyenvana', createdAt: '2025-05-10', status: 'pending', content: 'Nội dung chi tiết bài đăng 1...' },
-                { id: 2, title: 'Gây quỹ ủng hộ đồng bào lũ lụt miền Trung', author: 'tranvanb', createdAt: '2025-05-12', status: 'published', content: 'Nội dung chi tiết bài đăng 2...' },
-                { id: 3, title: 'Dọn dẹp bãi biển ngày cuối tuần', author: 'admin', createdAt: '2025-05-14', status: 'draft', content: 'Nội dung chi tiết bài đăng 3...' },
-                { id: 4, title: 'Lớp học tình thương cho trẻ em nghèo', author: 'lethic', createdAt: '2025-04-20', status: 'rejected', reason_reject: 'Thông tin chưa rõ ràng', content: 'Nội dung chi tiết bài đăng 4...' }
-            ];
-            let sampleUsers = [
-                { id: 1, username: 'nguyenvana', email: 'vana@example.com', fullName: 'Nguyễn Văn A', role: 'user', isActive: true, createdAt: '2025-01-15' },
-                { id: 2, username: 'tranvanb', email: 'vanb@example.com', fullName: 'Trần Văn B', role: 'user', isActive: true, createdAt: '2025-02-20' },
-                { id: 3, username: 'admin', email: 'admin@handofhope.org', fullName: 'Quản Trị Viên', role: 'admin', isActive: true, createdAt: '2025-01-01' },
-                { id: 4, username: 'lethic', email: 'thic@example.com', fullName: 'Lê Thị C', role: 'user', isActive: false, createdAt: '2025-03-10' }
-            ];
-            let currentEditingPostId = null;
-            let itemToDelete = { id: null, type: null }; // type can be 'post' or 'user'
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Xóa active khỏi tất cả link
+            navLinks.forEach(l => l.classList.remove('active'));
+            // Ẩn tất cả section
+            sections.forEach(sec => sec.classList.remove('active'));
 
-            // --- Hiển thị section ---
-            function showSection(sectionId) {
-                adminSections.forEach(section => {
-                    if (section.id === sectionId + '-section') {
-                        section.classList.add('active');
-                    } else {
-                        section.classList.remove('active');
-                    }
-                });
-                // Cập nhật tiêu đề trang
-                const activeLink = document.querySelector(`#sidebar-wrapper .nav-link[data-section="${sectionId}"]`);
-                if (activeLink) {
-                    pageTitleElement.textContent = activeLink.textContent.trim();
-                }
-            }
-
-            // --- Xử lý click sidebar ---
-            sidebarLinks.forEach(link => {
-                link.addEventListener('click', function (event) {
-                    // Không xử lý cho link Đăng Xuất
-                    if (this.getAttribute('href') === '/logout') return;
-
-                    event.preventDefault();
-                    const sectionId = this.getAttribute('data-section');
-
-                    sidebarLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    showSection(sectionId);
-                    // Lưu trạng thái vào localStorage để nhớ lần sau
-                    localStorage.setItem('adminActiveSection', sectionId);
-                });
-            });
-
-            // --- Toggle Sidebar ---
-            if (menuToggle) {
-                menuToggle.addEventListener('click', function () {
-                    wrapper.classList.toggle('toggled');
-                });
-            }
-
-            // --- Khởi tạo trang ---
-            const savedSection = localStorage.getItem('adminActiveSection') || 'dashboard';
-            const initialLink = document.querySelector(`#sidebar-wrapper .nav-link[data-section="${savedSection}"]`);
-            if (initialLink) {
-                initialLink.click(); // Kích hoạt click để hiển thị đúng section và active link
-            } else { // Fallback nếu không tìm thấy link
-                document.querySelector('#sidebar-wrapper .nav-link[data-section="dashboard"]').click();
-            }
-
-            // --- Quản lý Bài Đăng ---
-            const postsTableBody = document.getElementById('postsTableBody');
-            const postModal = new bootstrap.Modal(document.getElementById('postModal'));
-            const postForm = document.getElementById('postForm');
-            const postModalLabel = document.getElementById('postModalLabel');
-            const editPostIdInput = document.getElementById('editPostId');
-            const postStatusSelect = document.getElementById('postStatus');
-            const reasonRejectContainer = document.getElementById('reasonRejectContainer');
-            const postReasonRejectInput = document.getElementById('postReasonReject');
-
-            function renderPosts() {
-                if (!postsTableBody) return;
-                postsTableBody.innerHTML = ''; // Xóa nội dung cũ
-                if (samplePosts.length === 0) {
-                    postsTableBody.innerHTML = '<tr><td colspan="6" class="text-center">Chưa có bài đăng nào.</td></tr>';
-                    return;
-                }
-                samplePosts.forEach((post, index) => {
-                    const row = postsTableBody.insertRow();
-                    row.innerHTML = `
-                        <th scope="row">${index + 1}</th>
-                        <td>${post.title}</td>
-                        <td>${post.author}</td>
-                        <td>${new Date(post.createdAt).toLocaleDateString('vi-VN')}</td>
-                        <td><span class="status-${post.status}">${post.status.charAt(0).toUpperCase() + post.status.slice(1)}</span></td>
-                        <td class="text-center">
-                            <button class="btn btn-sm btn-info btn-action edit-post-btn" data-id="${post.id}"><i class="fas fa-edit"></i> Sửa</button>
-                            <button class="btn btn-sm btn-danger btn-action delete-item-btn" data-id="${post.id}" data-name="${post.title}" data-type="post"><i class="fas fa-trash"></i> Xóa</button>
-                        </td>
-                    `;
-                });
-                addPostEventListeners();
-            }
-
-            function addPostEventListeners() {
-                document.querySelectorAll('.edit-post-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        currentEditingPostId = parseInt(this.getAttribute('data-id'));
-                        const post = samplePosts.find(p => p.id === currentEditingPostId);
-                        if (post) {
-                            postModalLabel.textContent = 'Sửa Bài Đăng';
-                            editPostIdInput.value = post.id;
-                            document.getElementById('postTitle').value = post.title;
-                            document.getElementById('postAuthor').value = post.author; // Giả sử admin không sửa tác giả
-                            document.getElementById('postContent').value = post.content;
-                            postStatusSelect.value = post.status;
-                            handleReasonRejectVisibility(); // Ẩn/hiện lý do từ chối
-                            postReasonRejectInput.value = post.reason_reject || '';
-                            postModal.show();
-                        }
-                    });
-                });
-                addDeleteItemEventListeners(); // Gắn lại event cho nút xóa chung
-            }
-             postStatusSelect.addEventListener('change', handleReasonRejectVisibility);
-
-            function handleReasonRejectVisibility() {
-                if (postStatusSelect.value === 'rejected') {
-                    reasonRejectContainer.style.display = 'block';
-                } else {
-                    reasonRejectContainer.style.display = 'none';
-                    postReasonRejectInput.value = ''; // Xóa giá trị nếu không phải rejected
-                }
-            }
-
-
-            // Mở modal thêm mới
-            const addPostModalButton = document.querySelector('[data-bs-target="#addPostModal"]');
-            if (addPostModalButton) { // Nút Thêm Bài Đăng Mới dùng chung modal #postModal
-                addPostModalButton.addEventListener('click', function() {
-                    currentEditingPostId = null;
-                    postModalLabel.textContent = 'Thêm Bài Đăng Mới';
-                    postForm.reset();
-                    editPostIdInput.value = '';
-                    document.getElementById('postAuthor').value = 'admin'; // Giả sử admin là người tạo
-                    handleReasonRejectVisibility(); // Ẩn lý do từ chối khi thêm mới
-                    postModal.show();
-                });
-            }
-
-
-            postForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(postForm);
-                const postData = Object.fromEntries(formData.entries());
-
-                if (currentEditingPostId) { // Sửa bài
-                    const index = samplePosts.findIndex(p => p.id === currentEditingPostId);
-                    if (index !== -1) {
-                        samplePosts[index] = { ...samplePosts[index], ...postData, id: currentEditingPostId };
-                    }
-                } else { // Thêm mới
-                    postData.id = samplePosts.length > 0 ? Math.max(...samplePosts.map(p => p.id)) + 1 : 1;
-                    postData.createdAt = new Date().toISOString().split('T')[0];
-                    // postData.author = 'admin'; // Gán ở trên rồi
-                    samplePosts.push(postData);
-                }
-                renderPosts();
-                postModal.hide();
-                postForm.reset();
-            });
-
-            // --- Quản lý Người Dùng ---
-            const usersTableBody = document.getElementById('usersTableBody');
-            function renderUsers() {
-                if (!usersTableBody) return;
-                usersTableBody.innerHTML = ''; // Xóa nội dung cũ
-                if (sampleUsers.length === 0) {
-                    usersTableBody.innerHTML = '<tr><td colspan="7" class="text-center">Chưa có người dùng nào.</td></tr>';
-                    return;
-                }
-                sampleUsers.forEach((user, index) => {
-                    const row = usersTableBody.insertRow();
-                    row.innerHTML = `
-                        <th scope="row">${index + 1}</th>
-                        <td>${user.username}</td>
-                        <td>${user.email}</td>
-                        <td>${user.fullName}</td>
-                        <td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-                        <td><span class="badge bg-${user.isActive ? 'success' : 'danger'}">${user.isActive ? 'Hoạt động' : 'Khóa'}</span></td>
-                        <td class="text-center">
-                            <button class="btn btn-sm btn-info btn-action edit-user-btn" data-id="${user.id}"><i class="fas fa-user-edit"></i> Sửa</button>
-                            <button class="btn btn-sm btn-danger btn-action delete-item-btn" data-id="${user.id}" data-name="${user.username}" data-type="user"><i class="fas fa-user-slash"></i> Xóa</button>
-                        </td>
-                    `;
-                });
-                 addDeleteItemEventListeners(); // Gắn lại event cho nút xóa chung
-                 addUserEventListeners();
-            }
-
-            function addUserEventListeners() {
-                // Logic sửa user (nếu cần tạo modal riêng cho user)
-                document.querySelectorAll('.edit-user-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const userId = parseInt(this.getAttribute('data-id'));
-                        alert(`Chức năng sửa người dùng ID: ${userId} chưa được triển khai trong bản demo này.`);
-                        // Bạn có thể tạo một modal tương tự như postModal cho việc sửa user
-                    });
-                });
-            }
-
-
-            // --- Xử lý Xóa chung (Bài đăng & Người dùng) ---
-            const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-            const confirmDeleteButton = document.getElementById('confirmDeleteButton');
-            const itemNameToDeleteElement = document.getElementById('itemNameToDelete');
-
-            function addDeleteItemEventListeners() {
-                document.querySelectorAll('.delete-item-btn').forEach(button => {
-                    // Gỡ bỏ event listener cũ nếu có để tránh gọi nhiều lần
-                    const newButton = button.cloneNode(true);
-                    button.parentNode.replaceChild(newButton, button);
-
-                    newButton.addEventListener('click', function() {
-                        itemToDelete.id = parseInt(this.getAttribute('data-id'));
-                        itemToDelete.type = this.getAttribute('data-type');
-                        const itemName = this.getAttribute('data-name');
-                        itemNameToDeleteElement.textContent = itemName;
-                        deleteConfirmModal.show();
-                    });
-                });
-            }
-
-            confirmDeleteButton.addEventListener('click', function() {
-                if (itemToDelete.type === 'post' && itemToDelete.id !== null) {
-                    samplePosts = samplePosts.filter(p => p.id !== itemToDelete.id);
-                    renderPosts();
-                } else if (itemToDelete.type === 'user' && itemToDelete.id !== null) {
-                    sampleUsers = sampleUsers.filter(u => u.id !== itemToDelete.id);
-                    renderUsers();
-                }
-                deleteConfirmModal.hide();
-                itemToDelete = { id: null, type: null }; // Reset
-            });
-
-
-            // --- Gọi hàm render lần đầu ---
-            renderPosts();
-            renderUsers();
-            // Cập nhật số liệu dashboard (ví dụ)
-            document.getElementById('pending-posts-count').textContent = samplePosts.filter(p=>p.status === 'pending').length;
-            document.getElementById('new-users-count').textContent = sampleUsers.length; // Hoặc một tiêu chí "mới" khác
-
+            // Active link vừa click
+            this.classList.add('active');
+            // Hiện section tương ứng
+            const sectionId = this.getAttribute('data-section') + '-section';
+            const section = document.getElementById(sectionId);
+            if (section) section.classList.add('active');
+            // Đổi tiêu đề navbar nếu muốn
+            const pageTitle = this.textContent.trim();
+            const pageTitleElem = document.getElementById('page-title');
+            if (pageTitleElem) pageTitleElem.textContent = pageTitle;
         });
-    </script>
+    });
+});
+    document.addEventListener('DOMContentLoaded', function () {
+    // ...sidebar, section, toggle code giữ nguyên...
+
+    // --- Quản lý Bài Đăng ---
+    const postsTableBody = document.getElementById('postsTableBody');
+    const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+    const postForm = document.getElementById('postForm');
+    const postModalLabel = document.getElementById('postModalLabel');
+    const editPostIdInput = document.getElementById('editPostId');
+    const postStatusSelect = document.getElementById('postStatus');
+    const reasonRejectContainer = document.getElementById('reasonRejectContainer');
+    const postReasonRejectInput = document.getElementById('postReasonReject');
+    let currentEditingPostId = null;
+
+    // Lấy danh sách bài đăng từ backend
+    async function fetchPosts() {
+        const res = await fetch('/admin/posts');
+        return res.json();
+    }
+    renderPosts();
+    renderUsers();
+    updatePendingPostsCount();
+
+    async function updatePendingPostsCount() {
+        try {
+            const res = await fetch('/admin/posts/pending/count');
+            const data = await res.json();
+            document.getElementById('pending-posts-count').textContent = data.count;
+        } catch (e) {
+            document.getElementById('pending-posts-count').textContent = '0';
+        }
+    }
+    async function renderPosts() {
+        const posts = await fetchPosts();
+        postsTableBody.innerHTML = '';
+        if (!posts || posts.length === 0) {
+            postsTableBody.innerHTML = '<tr><td colspan="6" class="text-center">Chưa có bài đăng nào.</td></tr>';
+            return;
+        }
+        posts.forEach((post, index) => {
+    const row = postsTableBody.insertRow();
+    row.innerHTML = `
+        <th scope="row">${index + 1}</th>
+        <td>${post.title}</td>
+        <td>${post.author ? (post.author.full_name || post.author.username) : 'Ẩn danh'}</td>
+        <td>${new Date(post.created_at).toLocaleDateString('vi-VN')}</td>
+        <td><span class="status-${post.status}">${post.status}</span></td>
+        <td class="text-center">
+            ${
+                post.status === 'pending'
+                ? `<button class="btn btn-sm btn-success btn-action approve-post-btn" data-id="${post.id}"><i class="fas fa-check"></i> Duyệt</button>`
+                : ''
+            }
+            <button class="btn btn-sm btn-danger btn-action delete-item-btn" data-id="${post.id}" data-name="${post.title}" data-type="post"><i class="fas fa-trash"></i> Xóa</button>
+        </td>
+    `;
+});
+        addPostEventListeners(posts);
+    }
+
+    // function addPostEventListeners(posts) {
+    //     document.querySelectorAll('.edit-post-btn').forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             currentEditingPostId = parseInt(this.getAttribute('data-id'));
+    //             const post = posts.find(p => p.id === currentEditingPostId);
+    //             if (post) {
+    //                 postModalLabel.textContent = 'Sửa Bài Đăng';
+    //                 editPostIdInput.value = post.id;
+    //                 document.getElementById('postTitle').value = post.title;
+    //                 document.getElementById('postAuthor').value = post.author ? (post.author.full_name || post.author.username) : '';
+    //                 document.getElementById('postContent').value = post.content;
+    //                 postStatusSelect.value = post.status;
+    //                 handleReasonRejectVisibility();
+    //                 postReasonRejectInput.value = post.reason_reject || '';
+    //                 postModal.show();
+    //             }
+    //         });
+    //     });
+    //     addDeleteItemEventListeners();
+    // }
+
+    postStatusSelect.addEventListener('change', handleReasonRejectVisibility);
+    function handleReasonRejectVisibility() {
+        if (postStatusSelect.value === 'rejected') {
+            reasonRejectContainer.style.display = 'block';
+        } else {
+            reasonRejectContainer.style.display = 'none';
+            postReasonRejectInput.value = '';
+        }
+    }
+
+    // Thêm mới hoặc cập nhật bài đăng
+    postForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(postForm);
+        const postData = Object.fromEntries(formData.entries());
+        let url = '/admin/posts';
+        let method = 'POST';
+        if (currentEditingPostId) {
+            url += `/${currentEditingPostId}`;
+            method = 'PUT';
+        }
+        await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        });
+        postModal.hide();
+        postForm.reset();
+        currentEditingPostId = null;
+        renderPosts();
+    });
+
+    // Xóa bài đăng
+    function addDeleteItemEventListeners() {
+        document.querySelectorAll('.delete-item-btn').forEach(button => {
+            button.addEventListener('click', async function() {
+                const id = this.getAttribute('data-id');
+                const type = this.getAttribute('data-type');
+                if (type === 'post') {
+                    if (confirm('Bạn có chắc chắn muốn xóa bài đăng này?')) {
+                        await fetch(`/admin/posts/${id}`, { method: 'DELETE' });
+                        renderPosts();
+                    }
+                } else if (type === 'user') {
+                    if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+                        await fetch(`/admin/users/${id}`, { method: 'DELETE' });
+                        renderUsers();
+                    }
+                }
+            });
+        });
+    }
+
+    // --- Quản lý Người Dùng ---
+    const usersTableBody = document.getElementById('usersTableBody');
+    async function fetchUsers() {
+        const res = await fetch('/admin/users');
+        return res.json();
+    }
+    async function renderUsers() {
+        const users = await fetchUsers();
+        usersTableBody.innerHTML = '';
+        if (!users || users.length === 0) {
+            usersTableBody.innerHTML = '<tr><td colspan="7" class="text-center">Chưa có người dùng nào.</td></tr>';
+            return;
+        }
+        users.forEach((user, index) => {
+            const row = usersTableBody.insertRow();
+            row.innerHTML = `
+                <th scope="row">${index + 1}</th>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>${user.full_name}</td>
+                <td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                <td><span class="badge bg-${user.is_active ? 'success' : 'danger'}">${user.is_active ? 'Hoạt động' : 'Khóa'}</span></td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-danger btn-action delete-item-btn" data-id="${user.id}" data-name="${user.username}" data-type="user"><i class="fas fa-user-slash"></i> Xóa</button>
+                </td>
+            `;
+        });
+        addUserEventListeners(users);
+        addDeleteItemEventListeners();
+    }
+    function addUserEventListeners(users) {0
+        document.querySelectorAll('.edit-user-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = parseInt(this.getAttribute('data-id'));
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                    alert(`Chức năng sửa người dùng ID: ${userId} chưa được triển khai. Bạn có thể mở modal và gọi API PUT /admin/users/${userId} để cập nhật.`);
+                }
+            });
+        });
+    }
+                    // <button class="btn btn-sm btn-info btn-action edit-user-btn" data-id="${user.id}"><i class="fas fa-user-edit"></i> Sửa</button>
+
+    // --- Gọi hàm render lần đầu ---
+    renderPosts();
+    renderUsers();
+    function addPostEventListeners(posts) {
+    document.querySelectorAll('.approve-post-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const id = this.getAttribute('data-id');
+            if (confirm('Bạn có chắc chắn muốn duyệt bài đăng này?')) {
+                await fetch(`/admin/posts/${id}/approve`, { method: 'POST' });
+                renderPosts();
+                updatePendingPostsCount();
+            }
+        });
+    });
+    addDeleteItemEventListeners();
+}
+});
+document.getElementById('exportPostsExcel').addEventListener('click', function() {
+    window.location.href = '/admin/export/posts';
+});
+document.getElementById('exportUsersExcel').addEventListener('click', function() {
+    window.location.href = '/admin/export/users';
+});
+</script>
 </body>
 </html>

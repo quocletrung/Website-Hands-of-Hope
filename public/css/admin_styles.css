@@ -232,7 +232,7 @@ body {
 
 
 /* --- Status Badge Styling --- */
-.status-published, .status-draft, .status-pending, .status-rejected {
+.status-approved, .status-draft, .status-pending, .status-rejected {
     padding: 0.35em 0.65em;
     font-size: 75%;
     font-weight: 700;
@@ -243,7 +243,7 @@ body {
     vertical-align: baseline;
     border-radius: 0.25rem;
 }
-.status-published { background-color: #198754; } /* Bootstrap success green */
+.status-approved { background-color: #198754; } /* Bootstrap success green */
 .status-draft { background-color: #ffc107; color: #000; } /* Bootstrap warning yellow, chữ đen cho dễ đọc */
 .status-pending { background-color: #0dcaf0; } /* Bootstrap info cyan */
 .status-rejected { background-color: #dc3545; } /* Bootstrap danger red */
@@ -310,7 +310,6 @@ body {
     background-color: #f8f9fa;
     border-top: 1px solid #e9ecef;
 }
-
 /* --- Responsive Adjustments --- */
 @media (min-width: 768px) {
     #wrapper:not(.toggled) #sidebar-wrapper { /* Giữ sidebar mở theo mặc định trên màn hình lớn */
