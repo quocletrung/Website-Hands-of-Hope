@@ -104,7 +104,11 @@ router.post('/users/:id/toggle-active', isAdmin, async (req, res) => {
 
 // Xóa user
 router.delete('/users/:id', isAdmin, async (req, res) => {
-    await User.destroy({ where: { id: req.params.id } });
+    const userId = req.params.id;
+    // Xóa các bản ghi volunteer_joins liên quan đến user này
+    await VolunteerJoin.destroy({ where: { user_id: userId } });
+    // Sau đó xóa user
+    await User.destroy({ where: { id: userId } });
     res.json({ success: true });
 });
 // Xuất Excel danh sách tham gia hoạt động
@@ -196,10 +200,55 @@ router.post('/reward', isAdmin, async (req, res) => {
         await transporter.sendMail({
             from: process.env.GMAIL_USER,
             to: user.email,
-            subject: 'Thư Khen Thưởng Tình Nguyện Viên Tiêu Biểu',
-            html: `<h2>Xin chúc mừng ${user.full_name || user.username}!</h2>
-                   <p>${message}</p>
-                   <p><i>Hands of Hope</i></p>`
+            subject: '🌟 Thư Khen Thưởng – Ghi Nhận Đóng Góp Của Tình Nguyện Viên Tiêu Biểu',
+    html: `
+        <div style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; padding: 30px;">
+            <div style="max-width: 650px; margin: auto; border: 2px solid rgb(90, 130, 30); border-radius: 12px; padding: 40px;">
+
+                <h2 style="color: rgb(90, 130, 30); text-align: center;">
+                    🌿 THƯ VINH DANH TÌNH NGUYỆN VIÊN TIÊU BIỂU 🌿
+                </h2>
+
+                <p style="font-size: 16px; color: #333;">
+                    Kính gửi <strong>${user.full_name || user.username}</strong>,
+                </p>
+
+                <p style="font-size: 16px; color: #444;">
+                    Chúng tôi xin gửi đến bạn lời cảm ơn sâu sắc và lời chúc mừng trân trọng nhất vì những đóng góp không ngừng nghỉ và tinh thần thiện nguyện cao đẹp mà bạn đã thể hiện trong suốt thời gian qua.
+                </p>
+
+                <div style="margin: 25px 0; background-color: #f8fbf5; border-left: 6px solid rgb(90, 130, 30); padding: 20px; border-radius: 6px;">
+                    <p style="font-size: 15px; color: #2d3e20; font-style: italic; margin: 0;">
+                        ${message}
+                    </p>
+                </div>
+
+                <p style="font-size: 16px; color: #444;">
+                    Chúng tôi tin rằng, với trái tim nhân hậu và tinh thần cống hiến của bạn, cộng đồng sẽ ngày càng trở nên tốt đẹp và đầy ắp hy vọng.
+                </p>
+
+                <p style="font-size: 16px; color: #444;">
+                    Nếu bạn có bất kỳ câu hỏi hoặc đóng góp nào, xin đừng ngần ngại liên hệ với chúng tôi:
+                </p>
+
+                <p style="font-size: 16px; color: rgb(90, 130, 30);">
+                    📧 Email: <a href="mailto:quoclt.24ic@vku.udn.vn" style="color: rgb(90, 130, 30);">support@handsofhope.org</a><br>
+                    ☎️ Hotline: 0981067240
+                </p>
+
+                <p style="font-size: 16px; color: #333;">
+                    Trân trọng,<br>
+                    <strong style="color: rgb(90, 130, 30);">Ban điều hành – Hands of Hope</strong>
+                </p>
+
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ccc;">
+
+                <p style="font-size: 13px; color: gray;">
+                    Đây là email tự động từ hệ thống Hands of Hope. Vui lòng không phản hồi trực tiếp qua email này.
+                </p>
+            </div>
+        </div>
+    `
         });
 
         res.json({ message: 'Đã gửi email khen thưởng thành công!' });

@@ -80,42 +80,53 @@ router.post('/tham-gia/:postId', requireLogin, async (req, res) => {
             from: process.env.GMAIL_USER,
             to: user.email,
             subject: `Xác nhận tham gia hoạt động: ${post.title}`,
-             html: `
-            <img src="https://res.cloudinary.com/dfsj2bcpi/image/upload/v1747326737/charity_web_avatars/ipjl1n7ilir8lhinzkuh.png" alt="Logo" />
-             <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; padding: 30px;">
-            <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    html: `
+        <div style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; padding: 30px;">
+            <div style="max-width: 650px; margin: auto; border: 2px solid rgb(90, 130, 30); border-radius: 12px; padding: 40px;">
                 
-                <h2 style="color: #1e3d59;">🤍 Cảm ơn bạn, ${user.full_name}</h2>
-                
-                <p style="font-size: 16px; color: #333333;">
-                    Chúng tôi rất trân trọng khi bạn đã dành thời gian và trái tim để đăng ký tham gia hoạt động:
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="https://res.cloudinary.com/dfsj2bcpi/image/upload/v1747326737/charity_web_avatars/ipjl1n7ilir8lhinzkuh.png" alt="Hands of Hope Logo" style="height: 80px;" />
+                </div>
+
+                <h2 style="color: rgb(90, 130, 30); text-align: center;">
+                    🤝 XÁC NHẬN THAM GIA HOẠT ĐỘNG
+                </h2>
+
+                <p style="font-size: 16px; color: #333;">
+                    Kính gửi <strong>${user.full_name}</strong>,
                 </p>
 
-                <div style="background-color: #f0f3f5; padding: 15px 20px; border-left: 4px solid #1e88e5; margin: 20px 0; border-radius: 8px;">
+                <p style="font-size: 16px; color: #444;">
+                    Chúng tôi xin chân thành cảm ơn bạn vì đã đăng ký tham gia vào hoạt động dưới đây. Sự hiện diện của bạn là niềm vinh dự lớn đối với đội ngũ tổ chức và cộng đồng chúng ta.
+                </p>
+
+                <div style="margin: 25px 0; background-color: #f8fbf5; border-left: 6px solid rgb(90, 130, 30); padding: 20px; border-radius: 6px;">
                     <p><strong>Tên hoạt động:</strong> ${post.title}</p>
                     <p><strong>Thời gian:</strong> ${new Date(post.event_date).toLocaleDateString('vi-VN')}</p>
                     <p><strong>Địa điểm:</strong> ${post.location}</p>
                 </div>
 
                 <p style="font-size: 16px; color: #444;">
-                    Sự hiện diện của bạn chính là niềm động viên to lớn cho đội ngũ tổ chức và những người đang cần giúp đỡ.
+                    Mọi thông tin chi tiết hơn sẽ được chúng tôi cập nhật trước ngày diễn ra hoạt động. Trong thời gian chờ đợi, nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, xin vui lòng liên hệ với chúng tôi qua:
                 </p>
 
-                <p style="font-size: 16px; color: #444;">
-                    Chúng tôi sẽ gửi thêm thông tin chi tiết trước ngày diễn ra hoạt động. Trong thời gian chờ đợi, nếu bạn có bất kỳ thắc mắc nào, đừng ngần ngại liên hệ:
+                <p style="font-size: 16px; color: rgb(90, 130, 30);">
+                    📧 Email: <a href="mailto:support@handsofhope.org" style="color: rgb(90, 130, 30);">support@handsofhope.org</a><br>
+                    ☎️ Zalo/Điện thoại: 0981067240
                 </p>
 
-                <p style="font-size: 16px;">
-                    📧 <a href="mailto:quocletrung5126@gmail.com" style="color: #1e88e5;">support@handsofhope.org</a><br>
-                    ☎️ 0981067240 (Zalo, điện thoại)
+                <p style="font-size: 16px; color: #333; margin-top: 30px;">
+                    Một lần nữa, xin chân thành cảm ơn bạn vì đã góp phần lan tỏa yêu thương và mang lại hy vọng cho cộng đồng. Chúng tôi rất mong chờ được gặp bạn tại sự kiện!
                 </p>
 
-                <p style="font-size: 16px; color: #555; margin-top: 30px;">
-                    Một lần nữa, xin chân thành cảm ơn bạn vì đã góp phần lan tỏa yêu thương và hy vọng. ❤️
+                <p style="margin-top: 40px; font-size: 16px; color: rgb(90, 130, 30);">
+                    Trân trọng,<br>
+                    <strong>Ban tổ chức – Hands of Hope</strong>
                 </p>
 
-                <p style="margin-top: 40px; color: #999; font-size: 13px; border-top: 1px solid #ddd; padding-top: 20px;">
-                    Email này được gửi từ hệ thống của <strong>Hands of Hope</strong>. Nếu bạn nhận được email này nhầm lẫn, vui lòng bỏ qua.
+                <hr style="margin: 40px 0; border: none; border-top: 1px solid #ccc;" />
+                <p style="font-size: 13px; color: gray;">
+                    Email này được gửi từ hệ thống của <strong>Hands of Hope</strong>. Nếu bạn nhận được email này nhầm lẫn, xin vui lòng bỏ qua.
                 </p>
             </div>
         </div>

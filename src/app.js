@@ -11,6 +11,7 @@ const sequelize = require('./config/database');
 const User = require('./models/User');
 const VolunteerPost = require('./models/VolunteerPost'); // Model cho bài đăng tình nguyện
 const adminRoutes = require('./routes/adminRoutes'); // Đảm bảo đã bỏ comment
+const VolunteerJoin = require('./models/VolunteerJoin'); // Thêm nếu chưa có
 
 const app = express(); // Khởi tạo app Express
 
@@ -85,9 +86,21 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
                 { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
             ]
         });
+
+        let joinedPostIds = [];
+
+        // Nếu đã đăng nhập thì tìm các postId mà user đã tham gia
+        if (req.session.user) {
+            const joins = await VolunteerJoin.findAll({
+                where: { user_id: req.session.user.id }
+            });
+            joinedPostIds = joins.map(j => j.post_id);
+        }
+
         res.render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts,
+            joinedPostIds,
             success_msg: req.query.success_msg,
             error_msg: req.query.error_msg
         });
@@ -96,7 +109,7 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
         res.status(500).render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts: [],
-            error: "Không thể tải danh sách bài đăng."
+            error_msg: 'Không thể tải danh sách bài đăng.'
         });
     }
 });

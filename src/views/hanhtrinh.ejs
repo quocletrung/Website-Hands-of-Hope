@@ -78,12 +78,17 @@
                 <% } %>
 
                 <% if (user) { %>
-                    <form action="/volunteer/tham-gia/<%= post.id %>" method="POST">
-                        <button type="submit" class="green-btn">Tham gia</button>
-                    </form>
+                    <% if (joinedPostIds && joinedPostIds.includes(post.id)) { %>
+                        <button class="green-btn" disabled style="background-color: gray; cursor: default;">Đã tham gia</button>
+                    <% } else { %>
+                        <form action="/volunteer/tham-gia/<%= post.id %>" method="POST">
+                            <button type="submit" class="green-btn">Tham gia</button>
+                        </form>
+                    <% } %>
                 <% } else { %>
                     <a href="/login" class="green-btn">Đăng nhập để tham gia</a>
                 <% } %>
+
             </div>
         <% }) %>
     <% } else { %>
