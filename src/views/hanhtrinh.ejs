@@ -10,9 +10,6 @@
 
 <% var posts = typeof posts !== 'undefined' ? posts : []; %>
 
-
-
-
 <main class="hanhtrinh-container">
     <% if (typeof success_msg !== 'undefined') { %>
         <div class="message success-message"><%= success_msg %></div>
@@ -21,7 +18,7 @@
         <div class="message error-message"><%= error_msg %></div>
     <% } %>
     <% if (user) { %>
-        <form action="/volunteer/dang-bai" method="POST" class="post-form">
+        <form action="/volunteer/dang-bai" method="POST" enctype="multipart/form-data" class="post-form">
             <h3>Đăng bài tuyển tình nguyện viên</h3>
             <div>
                 <label>Tiêu đề:</label>
@@ -31,9 +28,13 @@
                 <label>Nội dung:</label>
                 <textarea name="content" required></textarea>
             </div>
+           <div>
+                <label>Link ảnh hoạt động (nếu có):</label>
+                <input type="url" name="image_url" id="imageUrlInput" placeholder="https://...">
+            </div>
             <div>
-                <label>Link ảnh (nếu có):</label>
-                <input type="text" name="image_url">
+                <label>Hoặc tải lên ảnh từ máy:</label>
+                <input type="file" name="image_file" id="imageFileInput" accept="image/*">
             </div>
             <div>
                 <label>Địa điểm:</label>
@@ -97,3 +98,12 @@
 </main>
 
 <%- include('partials/footer.ejs') %>
+<script>
+    // Chỉ cho phép nhập 1 trong 2
+    document.getElementById('imageUrlInput').addEventListener('input', function() {
+        document.getElementById('imageFileInput').disabled = !!this.value;
+    });
+    document.getElementById('imageFileInput').addEventListener('change', function() {
+        document.getElementById('imageUrlInput').disabled = !!this.value;
+    });
+</script>

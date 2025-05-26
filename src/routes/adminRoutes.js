@@ -5,19 +5,14 @@ const { isAdmin } = require('../middlewares/authMiddleware'); // Middleware ki�
 const User = require('../models/User');
 const VolunteerPost = require('../models/VolunteerPost');
 const sequelize = require('../config/database'); // Thêm dòng này
-// Route chính cho trang admin, render file admin.ejs
 const ExcelJS = require('exceljs');
 const VolunteerJoin = require('../models/VolunteerJoin');
 const nodemailer = require('nodemailer');
 
 router.get('/', isAdmin, (req, res) => {
-    // Giả sử file giao diện admin của bạn là 'admin.ejs' và nằm trong 'src/views/'
-    // Nếu bạn đặt trong thư mục con 'src/views/admin/dashboard.ejs' chẳng hạn,
-    // thì đổi thành 'admin/dashboard'
     res.render('admin', {
         pageTitle: 'Trang Quản Trị - Hands of Hope',
-        // Bạn có thể truyền thêm các dữ liệu cần thiết cho trang admin ở đây
-        // layout: 'layouts/admin_layout' // Nếu bạn dùng layout riêng cho admin
+
     });
 });
 

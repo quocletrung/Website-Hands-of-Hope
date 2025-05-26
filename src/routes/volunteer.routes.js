@@ -4,7 +4,11 @@ const { Op } = require('sequelize');
 const { User, VolunteerPost } = require('../models');
 const VolunteerJoin = require('../models/VolunteerJoin');
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const cloudinary = require('../config/cloudinary.config');
+const fs = require('fs');
 
+const upload = multer({ dest: 'uploads/' });
 // Middleware kiểm tra đăng nhập
 function requireLogin(req, res, next) {
     if (!req.session.user) return res.redirect('/login');
@@ -21,18 +25,56 @@ const transporter = nodemailer.createTransport({
 });
 
 // GET: Form đăng bài
-router.get('/dang-bai', requireLogin, (req, res) => {
-    res.render('volunteer_post_form', { pageTitle: 'Đăng bài tuyển tình nguyện viên' });
-});
-
-// POST: Xử lý đăng bài
-router.post('/dang-bai', requireLogin, async (req, res) => {
+    router.post('/dang-bai', requireLogin, upload.single('image_file'), async (req, res) => {
     const { title, content, image_url, location, event_date } = req.body;
+    let final_image_url = image_url || '';
+
     try {
+        // Nếu có file upload thì upload lên Cloudinary (ưu tiên file upload)
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: "volunteer_posts",
+                transformation: [{ width: 800, crop: "limit" }]
+            });
+            final_image_url = result.secure_url;
+            fs.unlinkSync(req.file.path); // Xóa file tạm sau khi upload
+        }
+
         await VolunteerPost.create({
             title,
             content,
-            image_url,
+            image_url: final_image_url,
+            location,
+            event_date,
+            created_by: req.session.user.id
+        });
+        res.redirect('/handofhope/hanh-trinh?success_msg=' + encodeURIComponent('Đăng bài thành công!'));
+    } catch (error) {
+        console.error("Lỗi khi đăng bài tình nguyện:", error);
+        res.redirect('/handofhope/hanh-trinh?error_msg=' + encodeURIComponent('Đăng bài thất bại. Vui lòng thử lại!'));
+    }
+});
+
+// POST: Xử lý đăng bài
+router.post('/dang-bai', requireLogin, upload.single('image_file'), async (req, res) => {
+    const { title, content, image_url, location, event_date } = req.body;
+    let final_image_url = image_url || '';
+
+    try {
+        // Nếu không có link ảnh nhưng có file upload thì upload lên Cloudinary
+        if (!final_image_url && req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: "volunteer_posts",
+                transformation: [{ width: 800, crop: "limit" }]
+            });
+            final_image_url = result.secure_url;
+            fs.unlinkSync(req.file.path); // Xóa file tạm sau khi upload
+        }
+
+        await VolunteerPost.create({
+            title,
+            content,
+            image_url: final_image_url,
             location,
             event_date,
             created_by: req.session.user.id
@@ -84,9 +126,9 @@ router.post('/tham-gia/:postId', requireLogin, async (req, res) => {
         <div style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffffff; padding: 30px;">
             <div style="max-width: 650px; margin: auto; border: 2px solid rgb(90, 130, 30); border-radius: 12px; padding: 40px;">
                 
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="https://res.cloudinary.com/dfsj2bcpi/image/upload/v1747326737/charity_web_avatars/ipjl1n7ilir8lhinzkuh.png" alt="Hands of Hope Logo" style="height: 80px;" />
-                </div>
+                // <div style="text-align: center; margin-bottom: 30px;">
+                //     <img src="https://res.cloudinary.com/dfsj2bcpi/image/upload/v1747326737/charity_web_avatars/ipjl1n7ilir8lhinzkuh.png" alt="Hands of Hope Logo" style="height: 80px;" />
+                // </div>
 
                 <h2 style="color: rgb(90, 130, 30); text-align: center;">
                     🤝 XÁC NHẬN THAM GIA HOẠT ĐỘNG
