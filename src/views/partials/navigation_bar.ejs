@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="/public/css/main_bar.css">
-<header class="site-header header-normal">
+<link rel="stylesheet" href="/css/main_bar.css"> <header class="site-header header-normal">
     <div class="header-container">
         <a href="/handofhope/trangchu" class="logo-link">
             <img src="/images/logo2.png" alt="Logo Hands of Hope" class="logo-img" style=" border-radius: 30%;">
@@ -25,7 +24,13 @@
                             <img src="/images/default-avatar.png" alt="Avatar" style="width: 35px; height: 35px; border-radius: 50%; margin-right: 8px; object-fit: cover;">
                         <% } %>
                     </a>
-                    <a href="/logout" class="social-link logout-button" aria-label="Đăng xuất" style=" /* Thêm style nếu cần */ "> 
+
+                    <% if (user.role === 'admin') { %>
+                        <a href="/admin" class="nav-link admin-link" style="margin-right: 15px; font-weight: bold; color: #dc3545;" title="Trang Quản Trị">
+                            <i class="fas fa-user-shield"></i> Quản trị
+                        </a>
+                    <% } %>
+                    <a href="/logout" class="social-link logout-button" aria-label="Đăng xuất"> 
                         Đăng xuất
                     </a>
                 </div>
@@ -35,9 +40,6 @@
                 <a href="/login" class="social-link login-button" aria-label="Đăng nhập">
                     Đăng nhập
                 </a>
-                <!-- <a href="/register" class="social-link register-button" aria-label="Đăng ký" style="margin-left: 10px;">
-                    Đăng ký
-                 </a> -->
             <% } %>
         </div>
     </div>

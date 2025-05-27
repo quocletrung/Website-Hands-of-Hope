@@ -1,84 +1,87 @@
 <%- include('partials/navigation_bar.ejs') %>
-    <% var posts=typeof posts !=='undefined' ? posts : []; %>
-        <link rel="stylesheet" href="/css/main_bar.css">
-        <link rel="stylesheet" href="/css/trangchu.css">
-        <% var posts=typeof posts !=='undefined' ? posts : []; %>
-            <!-- Form đăng bài tuyển tình nguyện viên -->
-            <% if (user) { %>
-                <form action="/volunteer/dang-bai" method="POST" style="margin-bottom: 30px;">
-                    <h3>Đăng bài tuyển tình nguyện viên</h3>
-                    <div>
-                        <label>Tiêu đề:</label>
-                        <input type="text" name="title" required>
-                    </div>
-                    <div>
-                        <label>Nội dung:</label>
-                        <textarea name="content" required></textarea>
-                    </div>
-                    <div>
-                        <label>Link ảnh (nếu có):</label>
-                        <input type="text" name="image_url">
-                    </div>
-                    <div>
-                        <label>Địa điểm:</label>
-                        <input type="text" name="location">
-                    </div>
-                    <div>
-                        <label>Ngày tổ chức:</label>
-                        <input type="date" name="event_date">
-                    </div>
-                    <button type="submit">Đăng bài</button>
-                </form>
-                <% } else { %>
-                    <p>Bạn cần <a href="/login">đăng nhập</a> để đăng bài.</p>
-                    <% } %>
 
-                        <h3>Danh sách bài tuyển tình nguyện viên</h3>
-                        <% if (posts && posts.length> 0) { %>
-                            <% posts.forEach(post=> { %>
-                                <div
-                                    style="border:1px solid #ccc; margin-bottom:20px; padding:10px; border-radius:8px;">
-                                    <!-- Header: Avatar, tên, ngày giờ -->
-                                    <script>
-                                        console.log("Avatar URL:", "<%= post.author && post.author.avatar_url ? post.author.avatar_url : '' %>");
-                                        console.log("Post Author:", "<%= post.author ? post.author.full_name : '' %>");
-                                    </script>
-                                    <div style="display:flex; align-items:center; margin-bottom:10px;">
-                                        <img src="<%= post.author && post.author.avatar_url ? post.author.avatar_url : '/img/default-avatar.png' %>"
-                                            alt="avatar"
-                                            style="width:40px; height:40px; border-radius:50%; margin-right:10px;">
-                                        <div>
-                                            <strong>
-                                                <%= post.author ? post.author.full_name : 'Ẩn danh' %>
-                                            </strong>
-                                            <div style="font-size:12px; color:#888;">
-                                                <%= post.created_at.toLocaleString('vi-VN', { hour: '2-digit' ,
-                                                    minute: '2-digit' , day: '2-digit' , month: '2-digit' ,
-                                                    year: 'numeric' }) %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h4 style="margin:0 0 10px 0;">
-                                        <%= post.title %>
-                                    </h4>
-                                    <p>
-                                        <%= post.content %>
-                                    </p>
-                                    <% if (post.image_url) { %>
-                                        <img src="<%= post.image_url %>" style="max-width:100%; border-radius:8px;">
-                                        <% } %>
-                                            <!-- Nút tham gia -->
-                                            <% if (user) { %>
-                                                <form action="/volunteer/tham-gia/<%= post.id %>" method="POST"
-                                                    style="margin-top:15px;">
-                                                    <button type="submit" class="green-btn">Tham gia</button>
-                                                </form>
-                                                <% } else { %>
-                                                    <a href="/login" class="green-btn">Đăng nhập để tham gia</a>
-                                                    <% } %>
-                                </div>
-                                <% }) %>
-                                    <% } else { %>
-                                        <p>Chưa có bài tuyển nào.</p>
-                                        <% } %>
-                                            <%- include('partials/footer.ejs') %>
+<link rel="stylesheet" href="/css/main_bar.css">
+<link rel="stylesheet" href="/css/trangchu.css">
+<link rel="stylesheet" href="/css/hanhtrinh.css">
+
+<% var posts = typeof posts !== 'undefined' ? posts : []; %>
+
+<main class="hanhtrinh-container">
+    <% if (typeof success_msg !== 'undefined') { %>
+        <div class="message success-message"><%= success_msg %></div>
+    <% } %>
+    <% if (typeof error_msg !== 'undefined') { %>
+        <div class="message error-message"><%= error_msg %></div>
+    <% } %>
+    <% if (user) { %>
+        <form action="/volunteer/dang-bai" method="POST" class="post-form">
+            <h3>Đăng bài tuyển tình nguyện viên</h3>
+            <div>
+                <label>Tiêu đề:</label>
+                <input type="text" name="title" required>
+            </div>
+            <div>
+                <label>Nội dung:</label>
+                <textarea name="content" required></textarea>
+            </div>
+            <div>
+                <label>Link ảnh (nếu có):</label>
+                <input type="text" name="image_url">
+            </div>
+            <div>
+                <label>Địa điểm:</label>
+                <input type="text" name="location">
+            </div>
+            <div>
+                <label>Ngày tổ chức:</label>
+                <input type="date" name="event_date">
+            </div>
+            <button type="submit" class="submit-btn">Đăng bài</button>
+        </form>
+    <% } else { %>
+        <p>Bạn cần <a href="/login">đăng nhập</a> để đăng bài.</p>
+    <% } %>
+
+    <h3>Danh sách bài tuyển tình nguyện viên</h3>
+
+    <% if (posts && posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+            <div class="post-card">
+                <div class="post-header">
+                    <img src="<%= post.author && post.author.avatar_url ? post.author.avatar_url : '/img/default-avatar.png' %>"
+                         alt="avatar"
+                         class="avatar">
+                    <div>
+                        <strong><%= post.author ? post.author.full_name : 'Ẩn danh' %></strong>
+                        <div class="post-date">
+                            <%= post.created_at.toLocaleString('vi-VN', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            }) %>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="post-title"><%= post.title %></h4>
+                <p class="post-content"><%= post.content %></p>
+                <% if (post.image_url) { %>
+                    <img src="<%= post.image_url %>" class="post-image">
+                <% } %>
+
+                <% if (user) { %>
+                    <form action="/volunteer/tham-gia/<%= post.id %>" method="POST">
+                        <button type="submit" class="green-btn">Tham gia</button>
+                    </form>
+                <% } else { %>
+                    <a href="/login" class="green-btn">Đăng nhập để tham gia</a>
+                <% } %>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>Chưa có bài tuyển nào.</p>
+    <% } %>
+</main>
+
+<%- include('partials/footer.ejs') %>

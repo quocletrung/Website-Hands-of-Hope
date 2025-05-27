@@ -1,0 +1,11 @@
+<!-- filepath: src/views/volunteer_list.ejs -->
+<%- include('partials/navigation_bar.ejs') %>
+<h2><%= pageTitle %></h2>
+<ul>
+    <% posts.forEach(post => { %>
+        <li>
+            <strong><%= post.title %></strong> - <%= post.location %>
+        </li>
+    <% }) %>
+</ul>
+<%- include('partials/footer.ejs') %>

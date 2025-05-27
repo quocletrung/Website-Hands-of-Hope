@@ -21,11 +21,20 @@ router.get('/dang-bai', requireLogin, (req, res) => {
 // POST: Xử lý đăng bài
 router.post('/dang-bai', requireLogin, async (req, res) => {
     const { title, content, image_url, location, event_date } = req.body;
-    await VolunteerPost.create({
-        title, content, image_url, location, event_date,
-        created_by: req.session.user.id
-    });
-    res.redirect('/handofhope/hanh-trinh'); // Trả về trang hanhtrinh
+    try {
+        await VolunteerPost.create({
+            title,
+            content,
+            image_url,
+            location,
+            event_date,
+            created_by: req.session.user.id
+        });
+        res.redirect('/handofhope/hanh-trinh?success_msg=' + encodeURIComponent('Đăng bài thành công!'));
+    } catch (error) {
+        console.error("Lỗi khi đăng bài tình nguyện:", error);
+        res.redirect('/handofhope/hanh-trinh?error_msg=' + encodeURIComponent('Đăng bài thất bại. Vui lòng thử lại!'));
+    }
 });
 
 // GET: Danh sách bài tuyển

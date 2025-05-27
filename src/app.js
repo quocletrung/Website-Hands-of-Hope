@@ -1,5 +1,5 @@
-// --- Khai báo các module cần thiết ---
-const profileRoutes = require('./routes/profileRoutes');
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -8,10 +8,11 @@ const { Op } = require('sequelize');
 const sequelize = require('./config/database');
 const User = require('./models/User');
 const VolunteerPost = require('./models/VolunteerPost');
+const adminRoutes = require('./routes/adminRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 const volunteerRoutes = require('./routes/volunteer.routes');
 
-
-const app = express(); // Đặt trước khi dùng app.use, app.get, ...
+const app = express();
 
 // --- Cài đặt View Engine ---
 app.set('view engine', 'ejs');
@@ -21,11 +22,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: '0981067240',
+    secret: process.env.SESSION_SECRET || 'your_very_strong_and_long_secret_key_here_please_change_me',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24
     }
@@ -38,28 +39,58 @@ app.use((req, res, next) => {
 });
 
 // --- Sử dụng router ---
-app.use('/volunteer', volunteerRoutes);
 app.use('/profile', profileRoutes);
+app.use('/volunteer', volunteerRoutes);
+app.use('/admin', adminRoutes);
 
 // --- Định nghĩa Routes ---
 app.get('/handofhope/trangchu', (req, res) => {
     res.render('trangchu', { pageTitle: 'Trang Chủ - Hands of Hope' });
 });
+
 app.get('/handofhope/gioi-thieu', (req, res) => {
     res.render('gioithieu', { pageTitle: 'Giới Thiệu - Hands of Hope' });
 });
+
 app.get('/handofhope/hanh-trinh', async (req, res) => {
-    const posts = await VolunteerPost.findAll({
-        order: [['created_at', 'DESC']],
-        include: [
-            { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
-        ]
-    });
-    res.render('hanhtrinh', { pageTitle: 'Hành Trình - Hands of Hope', posts });
+    try {
+        console.log("Đang lấy danh sách bài đăng hành trình...");
+        const posts = await VolunteerPost.findAll({
+            where: { status: 'approved' },
+            order: [['created_at', 'DESC']],
+            include: [
+                { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
+            ]
+        });
+        // Lấy top 5 tình nguyện viên cho bảng xếp hạng
+        const leaderboard = await User.findAll({
+            attributes: ['id', 'username', 'full_name', 'avatar_url', 'volunpoints'],
+            order: [['volunpoints', 'DESC']],
+            limit: 5
+        });
+        console.log("Bảng xếp hạng:", leaderboard);
+        res.render('hanhtrinh', {
+            pageTitle: 'Hành Trình - Hands of Hope',
+            posts,
+            leaderboard, // TRUYỀN BIẾN NÀY VÀO VIEW!
+            success_msg: req.query.success_msg,
+            error_msg: req.query.error_msg
+        });
+    } catch (error) {
+        console.error("Lỗi khi lấy bài đăng hành trình:", error);
+        res.status(500).render('hanhtrinh', {
+            pageTitle: 'Hành Trình - Hands of Hope',
+            posts: [],
+            leaderboard: [],
+            error: "Không thể tải danh sách bài đăng."
+        });
+    }
 });
+
 app.get('/handofhope/lien-he', (req, res) => {
     res.render('lienhe', { pageTitle: 'Liên Hệ - Hands of Hope' });
 });
+
 app.get('/handofhope/quyen-gop', (req, res) => {
     res.render('quyengop', { pageTitle: 'Quyên Góp - Hands of Hope' });
 });
@@ -108,6 +139,7 @@ app.post('/xu-ly-dang-ky', async (req, res, next) => {
         });
         res.redirect('/login');
     } catch (error) {
+        console.error("Lỗi trong quá trình đăng ký:", error);
         res.render('register', { pageTitle: 'Đăng Kí - Hands of Hope', error: 'Đã có lỗi xảy ra trong quá trình đăng ký.' });
     }
 });
@@ -131,22 +163,45 @@ app.post('/xu-ly-dang-nhap', async (req, res, next) => {
             username: user.username,
             email: user.email,
             full_name: user.full_name,
-            avatar_url: user.avatar_url
+            avatar_url: user.avatar_url,
+            bio: user.bio,
+            location: user.location,
+            volunpoints: user.volunpoints,
+            role: user.role,
+            is_active: user.is_active,
+            is_verified: user.is_verified,
+            created_at: user.created_at,
+            updated_at: user.updated_at
         };
         req.session.save(err => {
             if (err) return next(err);
             res.redirect('/handofhope/trangchu');
         });
     } catch (error) {
+        console.error("Lỗi trong quá trình đăng nhập:", error);
         res.render('login', { pageTitle: 'Đăng Nhập - Hands of Hope', error: 'Đã có lỗi xảy ra, vui lòng thử lại.' });
+    }
+});
+
+
+// API cho bảng xếp hạng
+app.get('/api/leaderboard', async (req, res) => {
+    try {
+        const topUsers = await User.findAll({
+            attributes: ['id', 'username', 'full_name', 'avatar_url', 'volunpoints'],
+            order: [['volunpoints', 'DESC']],
+            limit: 5
+        });
+        res.json(topUsers);
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu bảng xếp hạng:", error);
+        res.status(500).json({ message: "Lỗi máy chủ khi lấy bảng xếp hạng." });
     }
 });
 
 // --- Kết nối Database và Khởi động Server ---
 sequelize.authenticate()
-    .then(() => {
-        return sequelize.sync();
-    })
+    .then(() => sequelize.sync())
     .then(() => {
         const port = process.env.PORT || 3000;
         app.listen(port, () => {
