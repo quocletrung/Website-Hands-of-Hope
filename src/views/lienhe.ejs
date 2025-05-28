@@ -1,80 +1,101 @@
-    <link rel="stylesheet" href="/css/main_bar.css">  
+<head>
+    <title>Liên Hệ & Đăng Bài - Chắp Cánh Yêu Thương</title>
+    <link rel="stylesheet" href="/css/main_bar.css">
     <link rel="stylesheet" href="/css/trangchu.css">
+    <link rel="stylesheet" href="/css/lienhe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
     <%- include('partials/navigation_bar.ejs') %>
-    <%# Nội dung chính của trang liên hệ %>
-<%# Phần này bạn cần tự thiết kế dựa trên yêu cầu của trang Liên hệ %>
-<%# Ví dụ cơ bản: %>
-<div class="contact-page-container container"> <%# Sử dụng class "container" chung hoặc class riêng %>
-    <h1>Liên Hệ Với Chúng Tôi</h1>
-    <p>Chúng tôi luôn sẵn lòng lắng nghe ý kiến đóng góp và giải đáp mọi thắc mắc của bạn. Vui lòng liên hệ qua các thông tin dưới đây hoặc sử dụng biểu mẫu liên hệ.</p>
 
-    <div class="contact-info-grid">
-        <div class="contact-info-item">
-            <h2><i class="fas fa-map-marker-alt"></i> Địa chỉ</h2> <%# Ví dụ dùng Font Awesome icon %>
-            <p>470 Đ. Trần Đại Nghĩa, Hoà Hải, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</p>
-        </div>
-        <div class="contact-info-item">
-            <h2><i class="fas fa-envelope"></i> Email</h2>
-            <p><a href="mailto:quoclt.24ic@vku.udn.vn">quoclt.24ic@vku.udn.vn</a></p>
-            <p><a href="mailto:tantdn.24ic@vku.udn.vn">tantdn.24ic@vku.udn.vn</a></p>
-        </div>
-        <div class="contact-info-item">
-            <h2><i class="fas fa-phone-alt"></i> Điện thoại</h2>
-            <p><a href="tel:0981067240">0981 067 240</a> (Lê Trung Quốc)</p>
-            <p><a href="tel:0123456789">012 345 6789</a> (Văn phòng)</p>
-        </div>
-         <div class="contact-info-item">
-            <h2><i class="fab fa-facebook-f"></i> Mạng xã hội</h2>
-            <p><a href="https://www.facebook.com/quoc.le.trung.2025" target="_blank" rel="noopener noreferrer">Facebook cá nhân</a></p>
-            <p><a href="https://www.facebook.com/yourorganizationpage" target="_blank" rel="noopener noreferrer">Facebook Quỹ</a> (Ví dụ)</p>
-        </div>
-    </div>
-
-    <!-- <hr class="contact-divider">
-
-    <h2>Gửi Tin Nhắn Cho Chúng Tôi</h2>
-    <%# Ví dụ về form liên hệ - Bạn cần xử lý form này ở backend %>
-    <form action="/xu-ly-lien-he" method="POST" class="contact-form">
-         <% if (typeof contact_success !== 'undefined' && contact_success) { %>
-            <p class="success-message">Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.</p>
+<div class="contact-main-container">
+    <section class="contact-form-section">
+        <% if (typeof success_msg !== 'undefined' && success_msg) { %>
+            <div class="alert alert-success"><i class="fas fa-check-circle"></i> <%= success_msg %></div>
         <% } %>
-        <% if (typeof contact_error !== 'undefined' && contact_error) { %>
-            <p class="error-message"><%= contact_error %></p>
+        <% if (typeof error_msg !== 'undefined' && error_msg) { %>
+            <div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> <%= error_msg %></div>
         <% } %>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="contact_name">Họ và tên:</label>
-                <input type="text" id="contact_name" name="contact_name" required value="<%= typeof userInput !== 'undefined' ? userInput.contact_name : '' %>">
-            </div>
-            <div class="form-group">
-                <label for="contact_email">Email:</label>
-                <input type="email" id="contact_email" name="contact_email" required value="<%= typeof userInput !== 'undefined' ? userInput.contact_email : '' %>">
-            </div>
-        </div>
-         <div class="form-group">
-            <label for="contact_subject">Chủ đề:</label>
-            <input type="text" id="contact_subject" name="contact_subject" required value="<%= typeof userInput !== 'undefined' ? userInput.contact_subject : '' %>">
-        </div>
-        <div class="form-group">
-            <label for="contact_message">Nội dung tin nhắn:</label>
-            <textarea id="contact_message" name="contact_message" rows="6" required><%= typeof userInput !== 'undefined' ? userInput.contact_message : '' %></textarea>
-        </div>
-        <button type="submit" class="cta-button">Gửi Tin Nhắn</button>
-    </form> -->
 
-    <%# Bạn có thể nhúng bản đồ Google Maps vào đây nếu muốn %>
-    <div class="map-container">
-         <h2>Tìm Chúng Tôi Trên Bản Đồ</h2>
-         <iframe
-             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.733399249737!2d108.2510484153431!3d15.975293088939254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142108997dc971f%3A0x1295cb3d313469c9!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiB2w6AgVHJ1eeG7gW4gdGjDtG5nIFZp4buHdCAtIEjDoG4!5e0!3m2!1svi!2s!4v1650000000000!5m2!1svi!2s"
-             width="100%"
-             height="450"
-             style="border:0;"
-             allowfullscreen=""
-             loading="lazy"
-             referrerpolicy="no-referrer-when-downgrade">
-         </iframe>
-    </div>
+        <% if (user) { %>
+        <form action="/volunteer/dang-bai" method="POST" class="post-form card">
+            <h2><i class="fas fa-edit"></i> Đăng bài tuyển Tình nguyện viên</h2>
+            <div class="form-row">
+                    <label for="title">Tiêu đề:</label>
+                <input type="text" id="title" name="title" required autofocus>
+                </div>
+            <div class="form-row">
+                    <label for="content">Nội dung:</label>
+                <textarea id="content" name="content" rows="3" required></textarea>
+                </div>
+            <div class="form-row">
+                    <label for="image_url">Link ảnh (nếu có):</label>
+                    <input type="text" id="image_url" name="image_url">
+                </div>
+            <div class="form-row">
+                    <label for="location">Địa điểm:</label>
+                    <input type="text" id="location" name="location">
+                </div>
+            <div class="form-row">
+                    <label for="event_date">Ngày tổ chức:</label>
+                    <input type="date" id="event_date" name="event_date">
+                </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Đăng bài</button>
+            </form>
+        <% } else { %>
+            <div class="card need-login-note">
+                <p>
+                    <i class="fas fa-lock"></i> Bạn cần <a href="/login" class="btn btn-secondary">đăng nhập</a> để đăng bài tuyển tình nguyện viên.
+                </p>
+                </div>
+        <% } %>
+    </section>
 
+    <section class="info-map-section card">
+        <h1 class="contact-title"><i class="fas fa-hand-holding-heart"></i> Liên Hệ Với Chúng Tôi</h1>
+        <p class="contact-desc">
+            Chúng tôi luôn sẵn lòng lắng nghe, giải đáp và hỗ trợ bạn. Hãy liên lạc qua thông tin dưới đây hoặc tìm đến địa chỉ trên bản đồ.
+        </p>
+        <div class="contact-info-grid">
+                <div class="contact-info-item">
+                <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                <div>
+                    <h3>Địa chỉ</h3>
+                    <p>470 Đ. Trần Đại Nghĩa, Hoà Hải, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</p>
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                <div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:quoclt.24ic@vku.udn.vn">quoclt.24ic@vku.udn.vn</a></p>
+                    <p><a href="mailto:tantdn.24ic@vku.udn.vn">tantdn.24ic@vku.udn.vn</a></p>
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <span class="contact-icon"><i class="fas fa-phone-alt"></i></span>
+                <div>
+                    <h3>Điện thoại</h3>
+                    <p><a href="tel:0981067240">0981 067 240</a> (Lê Trung Quốc)</p>
+                    <p><a href="tel:0123456789">0398 2006 55</a> (Trần Đặng Nhật Tân)</p>
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <span class="contact-icon"><i class="fab fa-facebook-f"></i></span>
+                <div>
+                    <h3>Mạng xã hội</h3>
+                    <p><a href="https://www.facebook.com/quoc.le.trung.2025" target="_blank" rel="noopener noreferrer">Facebook cá nhân (Quốc)</a></p>
+                    <p><a href="https://www.facebook.com/yourorganizationpage" target="_blank" rel="noopener noreferrer">Facebook Quỹ</a> </p>
+                </div>
+            </div>
+        </div>
+        <div class="map-container">
+            <h3><i class="fas fa-map"></i> Bản đồ</h3>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.733297424069!2d108.25004031529619!3d15.97529334620697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142108997dc971f%3A0x1295cb3d313469c9!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiB2w6AgVHJ1eeG7gW4gdGjDtG5nIFZp4buHdCAtIEjagra!5e0!3m2!1svi!2s!4v1652083078980!5m2!1svi!2s"
+                width="100%" height="350" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
 </div>
     <%- include('partials/footer.ejs') %>
+</body>

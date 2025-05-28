@@ -1,126 +1,190 @@
-/* public/css/leaderboard.css */
-.leaderboard-popup-container {
-    position: fixed; /* Quan trọng: để cố định khi cuộn */
-    top: 150px;       /* Khoảng cách từ phía trên trang */
-    left: 0px;      /* Khoảng cách từ phía trái trang */
-    width: 250px;    /* Chiều rộng cố định */
-    max-height: calc(100vh - 40px); /* Chiều cao tối đa, trừ đi khoảng cách top và bottom */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Đảm bảo nó nổi lên trên các phần tử khác */
-    display: flex; /* Sử dụng flexbox để quản lý layout bên trong */
-    flex-direction: column; /* Các phần tử con xếp chồng lên nhau */
-    overflow: hidden; /* Để bo tròn các góc hoạt động đúng với overflow-y: auto */
-    font-family: Arial, sans-serif;
+/* Biến màu sắc (có thể đã định nghĩa ở hanhtrinh.css, đảm bảo nhất quán) */
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #FF9800;
+    --text-color: #333;
+    --light-gray: #f4f4f4;
+    --medium-gray: #ddd;
+    --dark-gray: #666;
+    --card-bg: #fff;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --gold-color: #ffd700;
+    --silver-color: #c0c0c0;
+    --bronze-color: #cd7f32;
+}
+.leaderboard-section {
+    background-color: var(--card-bg);
+    padding: 20px 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px; /* Khoảng cách với phần danh sách bài đăng */
 }
 
-/* Các CSS khác cho .leaderboard-header, .leaderboard-list, .leaderboard-item, v.v. giữ nguyên như trước */
-
-.leaderboard-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* Không cần border-top-left-radius và border-top-right-radius ở đây
-       vì .leaderboard-popup-container đã có border-radius và overflow: hidden */
-}
-
-.leaderboard-header h3 {
-    margin: 0;
-    font-size: 1.1em;
-    white-space: nowrap; /* Ngăn tiêu đề xuống dòng nếu quá dài */
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.close-leaderboard-button {
-    background: none;
-    border: none;
-    color: white;
+.leaderboard-title {
+    text-align: center;
+    color: var(--primary-color);
     font-size: 1.8em;
-    cursor: pointer;
-    padding: 0 5px;
-    line-height: 1;
+    margin-bottom: 5px;
 }
-.close-leaderboard-button:hover {
-    opacity: 0.8;
+
+.leaderboard-title .fa-trophy {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.leaderboard-subtitle {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 0.95em;
+    margin-bottom: 25px;
 }
 
 .leaderboard-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Cho phép cuộn nếu danh sách dài */
-    flex-grow: 1;     /* Phần này sẽ co giãn để lấp đầy không gian còn lại */
 }
 
 .leaderboard-item {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--light-gray);
+    transition: background-color 0.2s ease;
+    position: relative; /* Cho top-badge */
 }
+
 .leaderboard-item:last-child {
     border-bottom: none;
 }
 
-.leaderboard-rank {
-    font-weight: bold;
-    margin-right: 10px;
-    min-width: 20px;
-    text-align: right;
-    color: #555;
+.leaderboard-item:hover {
+    background-color: #f9f9f9;
 }
 
-.leaderboard-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
-    object-fit: cover;
-    border: 1px solid #eee;
+.leaderboard-rank {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-right: 15px;
+    width: 30px; /* Đảm bảo độ rộng cố định cho rank */
+    text-align: center;
 }
+
+.rank-icon {
+    font-size: 1.5em;
+}
+.rank-icon.gold { color: var(--gold-color); }
+.rank-icon.silver { color: var(--silver-color); }
+.rank-icon.bronze { color: var(--bronze-color); }
+
+
+.leaderboard-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid transparent;
+}
+
+.leaderboard-item.rank-1 .leaderboard-avatar { border-color: var(--gold-color); }
+.leaderboard-item.rank-2 .leaderboard-avatar { border-color: var(--silver-color); }
+.leaderboard-item.rank-3 .leaderboard-avatar { border-color: var(--bronze-color); }
 
 .leaderboard-user-info {
     flex-grow: 1;
-    overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
+    display: flex;
+    flex-direction: column;
 }
 
-.leaderboard-user-info .name {
-    font-weight: bold;
-    color: #333;
-    display: block;
-    margin-bottom: 2px;
-    white-space: nowrap; /* Ngăn tên xuống dòng */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Hiển thị ... nếu tên quá dài */
+.leaderboard-name {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.05em;
 }
 
-.leaderboard-user-info .points {
+.leaderboard-points {
     font-size: 0.9em;
-    color: #e85a00;
+    color: var(--dark-gray);
 }
- .leaderboard-user-info .points strong {
-    color: #c04b00;
+
+.leaderboard-points .points-icon {
+    color: var(--secondary-color);
+    margin-right: 4px;
+}
+
+.top-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.leaderboard-item.rank-1 .top-badge { background-color: var(--gold-color); color: #333; }
+.leaderboard-item.rank-2 .top-badge { background-color: var(--silver-color); color: #333; }
+.leaderboard-item.rank-3 .top-badge { background-color: var(--bronze-color); color: white; }
+
+
+.leaderboard-item.current-user-highlight {
+    background-color: #e6f4ea; /* Màu xanh lá nhạt để highlight */
+    border-left: 4px solid var(--primary-color);
+}
+.leaderboard-item.current-user-highlight .leaderboard-name {
+    font-weight: bold;
+}
+
+.current-user-leaderboard-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--medium-gray);
+}
+.current-user-leaderboard-info h4 {
+    font-size: 1.1em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 
-.leaderboard-loading,
-.leaderboard-error {
+.leaderboard-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-view-full-leaderboard {
+    /* Sử dụng class .btn và .btn-secondary đã có từ hanhtrinh.css */
+    /* Hoặc định nghĩa lại nếu cần */
+}
+
+.leaderboard-empty {
+    text-align: center;
+    color: var(--dark-gray);
     padding: 20px;
-    text-align: center;
-    color: #777;
+    font-style: italic;
 }
-.leaderboard-footer {
-    font-size: 0.8em;
-    color: #888;
-    text-align: center;
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #eee;
-    /* Không cần border-bottom-left-radius và border-bottom-right-radius ở đây */
+
+/* Responsive */
+@media (max-width: 768px) {
+    .leaderboard-section {
+        padding: 15px;
+    }
+    .leaderboard-title {
+        font-size: 1.5em;
+    }
+    .leaderboard-subtitle {
+        font-size: 0.9em;
+    }
+    .leaderboard-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    .leaderboard-name {
+        font-size: 1em;
+    }
 }

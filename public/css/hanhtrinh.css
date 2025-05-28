@@ -88,3 +88,249 @@
     cursor: pointer;
     margin-top: 10px;
 }
+
+/* Biến màu sắc (tùy chỉnh theo ý bạn) */
+:root {
+    --primary-color: #4CAF50; /* Xanh lá cây */
+    --secondary-color: #FF9800; /* Cam */
+    --text-color: #333;
+    --light-gray: #f4f4f4;
+    --medium-gray: #ddd;
+    --dark-gray: #666;
+    --card-bg: #fff;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Hoặc font bạn thích */
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.page-container.hanhtrinh-page {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.posts-section {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-top: 20px; /* Khoảng cách với leaderboard nếu có */
+}
+
+.section-title {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2.2em;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--dark-gray);
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+/* Grid cho các bài đăng */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 25px; /* Khoảng cách giữa các card */
+}
+
+.post-card-enhanced {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden; /* Để bo góc hình ảnh */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card-enhanced:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.post-card-image-container {
+    width: 100%;
+    height: 200px; /* Chiều cao cố định cho ảnh, hoặc dùng aspect-ratio */
+    overflow: hidden;
+}
+
+.post-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy mà không bị méo */
+    transition: transform 0.3s ease;
+}
+
+.post-card-enhanced:hover .post-card-image {
+    transform: scale(1.05);
+}
+
+.post-card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Để footer luôn ở dưới cùng */
+}
+
+.post-card-header {
+    margin-bottom: 15px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--medium-gray);
+}
+
+.author-name {
+    font-size: 1.1em;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.post-meta {
+    font-size: 0.85em;
+    color: var(--dark-gray);
+}
+
+.post-meta i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+.post-card-title {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.post-card-title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.post-card-title a:hover {
+    color: var(--secondary-color);
+}
+
+.post-card-excerpt {
+    font-size: 0.95em;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    flex-grow: 1; /* Đẩy footer xuống */
+}
+
+.read-more-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more-link:hover {
+    text-decoration: underline;
+    color: var(--secondary-color);
+}
+
+.post-card-footer {
+    margin-top: auto; /* Đẩy footer xuống dưới cùng của card content */
+    padding-top: 15px;
+    border-top: 1px solid var(--light-gray);
+    display: flex;
+    justify-content: space-between; /* Căn chỉnh các item trong footer */
+    align-items: center;
+}
+
+/* Nút bấm chung */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa icon và text */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41; /* Màu xanh lá đậm hơn */
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #e68a00; /* Màu cam đậm hơn */
+}
+
+.btn-join i, .btn-login-prompt i {
+    font-size: 1.1em;
+}
+
+/* Thông báo khi không có bài đăng */
+.no-posts-message {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--dark-gray);
+}
+
+.no-posts-message i {
+    font-size: 3em; /* Icon to hơn */
+    color: var(--medium-gray);
+    margin-bottom: 20px;
+}
+
+.no-posts-message p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .posts-grid {
+        grid-template-columns: 1fr; /* 1 cột trên màn hình nhỏ */
+    }
+
+    .section-title {
+        font-size: 1.8em;
+    }
+
+    .section-subtitle {
+        font-size: 1em;
+    }
+}

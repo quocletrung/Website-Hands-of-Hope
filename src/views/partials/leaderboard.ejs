@@ -1,4 +1,4 @@
-<div id="leaderboard-popup" class="leaderboard-popup-container" style="display: none;">
+<!-- <div id="leaderboard-popup" class="leaderboard-popup-container" >
     <div class="leaderboard-header">
         <h3>🏆Bảng Xếp Hạng</h3>
         <button id="close-leaderboard-btn" class="close-leaderboard-button">&times;</button>
@@ -9,4 +9,77 @@
     <p class="leaderboard-footer">
         Bảng xếp hạng sẽ tự động ẩn sau khi đóng.
     </p>
-</div>
+</div> -->
+
+<%
+
+var leaderboard = typeof leaderboard !== 'undefined' ? leaderboard : [];
+
+var currentUserLeaderboard = typeof currentUserLeaderboard !== 'undefined' ? currentUserLeaderboard : null; // Thông tin của người dùng hiện tại nếu có trong BXH
+%>
+
+<aside class="leaderboard-section">
+    <h3 class="leaderboard-title">
+        <i class="fas fa-trophy"></i> Bảng Vàng Tri Ân
+    </h3>
+    <p class="leaderboard-subtitle">Vinh danh những trái tim vàng đã đóng góp tích cực</p>
+    <p class="leaderboard-subtitle"></p>
+    
+    <% if (leaderboard && leaderboard.length > 0) { %>
+        <ol class="leaderboard-list">
+            <% leaderboard.slice(0, 5).forEach((user, index) => { %> <%# Chỉ hiển thị top 5 hoặc tùy chỉnh %>
+                <li class="leaderboard-item <%= user.rank === 1 ? 'rank-1' : (user.rank === 2 ? 'rank-2' : (user.rank === 3 ? 'rank-3' : '')) %> <%= user.isCurrentUser ? 'current-user-highlight' : '' %>">
+                    <div class="leaderboard-rank">
+                        <% if (user.rank === 1) { %>
+                            <i class="fas fa-crown rank-icon gold"></i>
+                        <% } else if (user.rank === 2) { %>
+                            <i class="fas fa-crown rank-icon silver"></i>
+                        <% } else if (user.rank === 3) { %>
+                            <i class="fas fa-crown rank-icon bronze"></i>
+                        <% } else { %>
+                            <%= user.rank %>
+                        <% } %>
+                    </div>
+                    <img src="<%= user.avatar_url || '/img/default-avatar.png' %>" alt="<%= user.full_name %>" class="leaderboard-avatar">
+                    <div class="leaderboard-user-info">
+                        <span class="leaderboard-name"><%= user.full_name %></span>
+                        <span class="leaderboard-points">
+                            <i class="fas fa-star points-icon"></i> <%= user.points || 0 %> điểm
+                        </span>
+                    </div>
+                    <% if (user.rank <= 3) { %>
+                        <span class="top-badge">Top <%= user.rank %></span>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ol>
+
+        <% if (currentUserLeaderboard && currentUserLeaderboard.rank > 5) { %>
+             <%# Hiển thị thông tin người dùng hiện tại nếu họ không nằm trong top hiển thị %>
+            <div class="current-user-leaderboard-info">
+                <h4>Vị trí của bạn:</h4>
+                <div class="leaderboard-item current-user-highlight">
+                     <div class="leaderboard-rank"><%= currentUserLeaderboard.rank %></div>
+                     <img src="<%= currentUserLeaderboard.avatar_url || '/img/default-avatar.png' %>" alt="<%= currentUserLeaderboard.full_name %>" class="leaderboard-avatar">
+                     <div class="leaderboard-user-info">
+                         <span class="leaderboard-name"><%= currentUserLeaderboard.full_name %> (Bạn)</span>
+                         <span class="leaderboard-points">
+                             <i class="fas fa-star points-icon"></i> <%= currentUserLeaderboard.points || 0 %> điểm
+                         </span>
+                     </div>
+                </div>
+            </div>
+        <% } %>
+
+        <% if (leaderboard.length > 5) { %>
+            <div class="leaderboard-actions">
+                <a href="/leaderboard" class="btn btn-secondary btn-view-full-leaderboard">
+                    <i class="fas fa-list-ol"></i> Xem đầy đủ bảng xếp hạng
+                </a>
+            </div>
+        <% } %>
+
+    <% } else { %>
+        <p class="leaderboard-empty">Chưa có dữ liệu bảng xếp hạng. Hãy tích cực tham gia nhé!</p>
+    <% } %>
+</aside>

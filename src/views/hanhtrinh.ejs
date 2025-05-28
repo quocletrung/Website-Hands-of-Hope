@@ -1,87 +1,100 @@
 <%- include('partials/navigation_bar.ejs') %>
 
-<link rel="stylesheet" href="/css/main_bar.css">
-<link rel="stylesheet" href="/css/trangchu.css">
-<link rel="stylesheet" href="/css/hanhtrinh.css">
+    <link rel="stylesheet" href="/css/main_bar.css">
+    <link rel="stylesheet" href="/css/trangchu.css"> <!-- Xem xét có cần thiết không nếu hanhtrinh.css đã đủ -->
+    <link rel="stylesheet" href="/css/hanhtrinh.css">
+    <link rel="stylesheet" href="/css/leaderboard.css">
+    <!-- Thêm Font Awesome nếu bạn muốn sử dụng icons (tùy chọn) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<% var posts = typeof posts !== 'undefined' ? posts : []; %>
+    <% var posts=typeof posts !=='undefined' ? posts : []; %>
+        <% var user=typeof user !=='undefined' ? user : null; %> <!-- Đảm bảo biến user được định nghĩa -->
 
-<main class="hanhtrinh-container">
-    <% if (typeof success_msg !== 'undefined') { %>
-        <div class="message success-message"><%= success_msg %></div>
-    <% } %>
-    <% if (typeof error_msg !== 'undefined') { %>
-        <div class="message error-message"><%= error_msg %></div>
-    <% } %>
-    <% if (user) { %>
-        <form action="/volunteer/dang-bai" method="POST" class="post-form">
-            <h3>Đăng bài tuyển tình nguyện viên</h3>
-            <div>
-                <label>Tiêu đề:</label>
-                <input type="text" name="title" required>
+            <div class="page-container hanhtrinh-page">
+<%- include('partials/leaderboard.ejs', { leaderboard: leaderboard }) %>
+                    <main class="posts-section">
+                        <h2 class="section-title">Hành Trình Yêu Thương - Chung Tay Góp Sức</h2>
+                        <p class="section-subtitle">Khám phá các dự án tình nguyện và tìm cơ hội đóng góp ý nghĩa cho
+                            cộng đồng.</p>
+                        <% if (posts && posts.length> 0) { %>
+                            <div class="posts-grid">
+                                <% posts.forEach(post=> { %>
+                                    <article class="post-card-enhanced">
+                                        <% if (post.image_url) { %>
+                                            <div class="post-card-image-container">
+                                                <img src="<%= post.image_url %>" alt="<%= post.title %>"
+                                                    class="post-card-image">
+                                            </div>
+                                            <% } %>
+                                                <div class="post-card-content">
+                                                    <header class="post-card-header">
+                                                        <div class="author-info">
+                                                            <img src="<%= post.author && post.author.avatar_url ? post.author.avatar_url : '/img/default-avatar.png' %>"
+                                                                alt="avatar" class="author-avatar">
+                                                            <div>
+                                                                <strong class="author-name">
+                                                                    <%= post.author ? post.author.full_name
+                                                                        : 'Người đóng góp ẩn danh' %>
+                                                                </strong>
+                                                                <div class="post-meta">
+                                                                    <i class="far fa-calendar-alt"></i>
+                                                                    <!-- Icon lịch -->
+                                                                    <%= new
+                                                                        Date(post.created_at).toLocaleDateString('vi-VN',
+                                                                        { day: '2-digit' , month: '2-digit' ,
+                                                                        year: 'numeric' }) %>
+                                                                        &nbsp; <i class="far fa-clock"></i>
+                                                                        <!-- Icon đồng hồ -->
+                                                                        <%= new
+                                                                            Date(post.created_at).toLocaleTimeString('vi-VN',
+                                                                            { hour: '2-digit' , minute: '2-digit' }) %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </header>
+                                                    <h3 class="post-card-title"><a
+                                                            href="/volunteer/post/<%= post.id %>">
+                                                            <%= post.title %>
+                                                        </a></h3>
+                                                    <p class="post-card-excerpt">
+                                                        <%# Giới hạn nội dung hiển thị, bạn có thể điều chỉnh độ dài %>
+                                                            <%= post.content.substring(0, 150) %>
+                                                                <% if (post.content.length> 150) { %>...<% } %>
+                                                                        <% if (post.content.length> 150) { %>
+                                                                            <a href="/volunteer/post/<%= post.id %>"
+                                                                                class="read-more-link">Xem thêm</a>
+                                                                            <% } %>
+                                                    </p>
+                                                    <footer class="post-card-footer">
+                                                        <% if (user) { %>
+                                                            <form action="/volunteer/tham-gia/<%= post.id %>"
+                                                                method="POST" style="display: inline;">
+                                                                <button type="submit" class="btn btn-primary btn-join">
+                                                                    <i class="fas fa-hands-helping"></i> Tham gia ngay
+                                                                </button>
+                                                            </form>
+                                                            <% } else { %>
+                                                                <a href="/login"
+                                                                    class="btn btn-secondary btn-login-prompt">
+                                                                    <i class="fas fa-sign-in-alt"></i> Đăng nhập để tham
+                                                                    gia
+                                                                </a>
+                                                                <% } %>
+                                                                    <!-- Ví dụ thêm thông tin khác nếu có -->
+                                                                    <!-- <span class="post-location"><i class="fas fa-map-marker-alt"></i> <%= post.location || 'N/A' %></span> -->
+                                                    </footer>
+                                                </div>
+                                    </article>
+                                    <% }) %>
+                            </div>
+                            <% } else { %>
+                                <div class="no-posts-message">
+                                    <i class="fas fa-empty-set fa-3x"></i>
+                                    <p>Hiện tại chưa có bài tuyển tình nguyện viên nào.</p>
+                                    <p>Hãy quay lại sau nhé!</p>
+                                </div>
+                                <% } %>
+                    </main>
             </div>
-            <div>
-                <label>Nội dung:</label>
-                <textarea name="content" required></textarea>
-            </div>
-            <div>
-                <label>Link ảnh (nếu có):</label>
-                <input type="text" name="image_url">
-            </div>
-            <div>
-                <label>Địa điểm:</label>
-                <input type="text" name="location">
-            </div>
-            <div>
-                <label>Ngày tổ chức:</label>
-                <input type="date" name="event_date">
-            </div>
-            <button type="submit" class="submit-btn">Đăng bài</button>
-        </form>
-    <% } else { %>
-        <p>Bạn cần <a href="/login">đăng nhập</a> để đăng bài.</p>
-    <% } %>
 
-    <h3>Danh sách bài tuyển tình nguyện viên</h3>
-
-    <% if (posts && posts.length > 0) { %>
-        <% posts.forEach(post => { %>
-            <div class="post-card">
-                <div class="post-header">
-                    <img src="<%= post.author && post.author.avatar_url ? post.author.avatar_url : '/img/default-avatar.png' %>"
-                         alt="avatar"
-                         class="avatar">
-                    <div>
-                        <strong><%= post.author ? post.author.full_name : 'Ẩn danh' %></strong>
-                        <div class="post-date">
-                            <%= post.created_at.toLocaleString('vi-VN', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric'
-                            }) %>
-                        </div>
-                    </div>
-                </div>
-                <h4 class="post-title"><%= post.title %></h4>
-                <p class="post-content"><%= post.content %></p>
-                <% if (post.image_url) { %>
-                    <img src="<%= post.image_url %>" class="post-image">
-                <% } %>
-
-                <% if (user) { %>
-                    <form action="/volunteer/tham-gia/<%= post.id %>" method="POST">
-                        <button type="submit" class="green-btn">Tham gia</button>
-                    </form>
-                <% } else { %>
-                    <a href="/login" class="green-btn">Đăng nhập để tham gia</a>
-                <% } %>
-            </div>
-        <% }) %>
-    <% } else { %>
-        <p>Chưa có bài tuyển nào.</p>
-    <% } %>
-</main>
-
-<%- include('partials/footer.ejs') %>
+            <%- include('partials/footer.ejs') %>

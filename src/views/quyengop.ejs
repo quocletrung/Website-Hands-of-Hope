@@ -1,4 +1,70 @@
     <link rel="stylesheet" href="/css/main_bar.css">  
-   
+<link rel="stylesheet" href="/css/quyengop.css">
    <%- include('partials/navigation_bar.ejs') %>
+
+<div class="donate-main-container">
+    <section class="donate-hero card">
+        <div class="donate-hero-text">
+            <h1><i class="fas fa-hands-helping"></i> Chung Tay Góp Yêu Thương</h1>
+            <p>
+                Bạn có thể đóng góp để giúp đỡ các hoàn cảnh khó khăn, trẻ em vùng sâu vùng xa, hoặc hỗ trợ các dự án thiện nguyện của Hands of Hope.
+                <br> Mọi sự sẻ chia của bạn đều đáng quý và sẽ được gửi đến những người thực sự cần!
+            </p>
+            <a href="#donate-methods" class="btn btn-primary donate-action-btn"><i class="fas fa-donate"></i> Quyên góp ngay</a>
+        </div>
+        <div class="donate-hero-image">
+            <img src="/images/donate_hero.png" alt="Chung tay góp yêu thương" loading="lazy">
+        </div>
+    </section>
+
+    <section id="donate-methods" class="donate-methods card">
+        <h2><i class="fas fa-gift"></i> Các hình thức quyên góp</h2>
+        <div class="donate-methods-grid">
+            <div class="donate-method-item">
+                <span class="method-icon"><i class="fas fa-university"></i></span>
+                <h3>Chuyển khoản ngân hàng</h3>
+                <div class="method-detail">
+                    <span>Ngân hàng: <strong>Vietcombank</strong></span><br>
+                    <span>Số tài khoản: <strong>0123456789</strong></span><br>
+                    <span>Chủ tài khoản: <strong>LE TRUNG QUOC</strong></span><br>
+                    <span><em>Ghi chú chuyển tiền: "Quyen gop Hands of Hope"</em></span>
+                </div>
+            </div>
+            <div class="donate-method-item">
+                <span class="method-icon"><i class="fas fa-wallet"></i></span>
+                <h3>Ví điện tử Momo/ZaloPay</h3>
+                <div class="method-detail">
+                    <span>Số điện thoại: <strong>0981 067 240</strong></span><br>
+                    <span>Tên tài khoản: <strong>LÊ TRUNG QUỐC</strong></span>
+                    <br>
+                    <img src="/images/qr_momo.png" alt="QR Momo" class="qr-image">
+                    <p><em>Quét mã QR để ủng hộ nhanh chóng!</em></p>
+                </div>
+            </div>
+            <div class="donate-method-item">
+                <span class="method-icon"><i class="fas fa-user-friends"></i></span>
+                <h3>Quyên góp trực tiếp</h3>
+                <div class="method-detail">
+                    <span>Địa chỉ thu nhận: <strong>470 Trần Đại Nghĩa, Đà Nẵng</strong></span><br>
+                    <span>Liên hệ: <a href="tel:0981067240">0981 067 240</a> (Lê Trung Quốc)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="donate-impact card">
+        <h2><i class="fas fa-heart"></i> Ý nghĩa của sự đóng góp</h2>
+        <ul>
+            <li>Giúp đỡ trẻ em, người già và các hoàn cảnh khó khăn trên khắp Việt Nam.</li>
+            <li>Hỗ trợ thực hiện các chương trình thiện nguyện cộng đồng lâu dài.</li>
+            <li>Tạo nên sự thay đổi, lan tỏa yêu thương và kết nối hàng ngàn trái tim.</li>
+        </ul>
+        <blockquote>
+            <i class="fas fa-quote-left"></i>
+            <span>Một tấm lòng nhỏ có thể thay đổi cả một cuộc đời!</span>
+            <i class="fas fa-quote-right"></i>
+        </blockquote>
+    </section>
+</div>
+
     <%- include('partials/footer.ejs') %>
