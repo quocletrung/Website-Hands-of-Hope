@@ -8,6 +8,7 @@ const { Op } = require('sequelize');
 const sequelize = require('./config/database');
 const User = require('./models/User');
 const VolunteerPost = require('./models/VolunteerPost');
+const VolunteerJoin = require('./models/VolunteerJoin');
 const adminRoutes = require('./routes/adminRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const volunteerRoutes = require('./routes/volunteer.routes');
@@ -21,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 // --- Middleware ---
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_very_strong_and_long_secret_key_here_please_change_me',
     resave: false,
@@ -54,7 +56,6 @@ app.get('/handofhope/gioi-thieu', (req, res) => {
 
 app.get('/handofhope/hanh-trinh', async (req, res) => {
     try {
-        console.log("Đang lấy danh sách bài đăng hành trình...");
         const posts = await VolunteerPost.findAll({
             where: { status: 'approved' },
             order: [['created_at', 'DESC']],
@@ -62,17 +63,19 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
                 { model: User, as: 'author', attributes: ['full_name', 'avatar_url'] }
             ]
         });
-        // Lấy top 5 tình nguyện viên cho bảng xếp hạng
-        const leaderboard = await User.findAll({
-            attributes: ['id', 'username', 'full_name', 'avatar_url', 'volunpoints'],
-            order: [['volunpoints', 'DESC']],
-            limit: 5
-        });
-        console.log("Bảng xếp hạng:", leaderboard);
+
+        let joinedPostIds = [];
+        if (req.session.user) {
+            const joins = await VolunteerJoin.findAll({
+                where: { user_id: req.session.user.id }
+            });
+            joinedPostIds = joins.map(j => j.post_id);
+        }
+
         res.render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts,
-            leaderboard, // TRUYỀN BIẾN NÀY VÀO VIEW!
+            joinedPostIds,
             success_msg: req.query.success_msg,
             error_msg: req.query.error_msg
         });
@@ -81,8 +84,7 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
         res.status(500).render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts: [],
-            leaderboard: [],
-            error: "Không thể tải danh sách bài đăng."
+            error_msg: 'Không thể tải danh sách bài đăng.'
         });
     }
 });
