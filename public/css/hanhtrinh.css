@@ -334,3 +334,37 @@ body {
         font-size: 1em;
     }
 }
+
+/* Modal xem ảnh lớn */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+.image-modal.show {
+    display: flex;
+}
+.image-modal .modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Đảm bảo ảnh không bị crop */
+    border-radius: 8px;
+    box-shadow: 0 0 20px #000;
+    background: #fff;
+}
+.image-modal .close-modal {
+    position: absolute;
+    top: 30px; right: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}

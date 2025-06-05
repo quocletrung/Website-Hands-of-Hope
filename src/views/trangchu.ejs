@@ -1,371 +1,377 @@
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/main_bar.css">  
-    <link rel="stylesheet" href="/css/trangchu.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/main_bar.css">
+<link rel="stylesheet" href="/css/trangchu.css">
 
 <body>
     <%- include('partials/navigation_bar.ejs') %>
-    
-    <main>
-        <section class="hero-slider">
-            <div class="wheel-container">
-                <div class="wheel-slide">
-                    <div class="wheel-item">
-                        <img src="/IMAGES/denvaudituthien.jpeg" alt="Hình ảnh hoạt động từ thiện 1" style="min-height: 580px; min-width: 1400px;">
-                    </div>
-                    <div class="wheel-item">
-                        <img src="/IMAGES/anhdoanvienthiennguyen.jpg" alt="Hình ảnh hoạt động từ thiện 2">
-                    </div>
-                    <div class="wheel-item">
-                        <img src="/IMAGES/anhthiennguyen.webp" alt="Hình ảnh chương trình Hành trình cùng em viết bước tới trường">
-                    </div>
-                </div>
-                <div class="wheel-nav">
-                    <button class="nav-button prev" aria-label="Ảnh trước">&#8249;</button>
-                    <button class="nav-button next" aria-label="Ảnh kế tiếp">&#8250;</button>
-                </div>
-                <div class="wheel-dots">
-                    <button class="dot active" data-index="0" aria-label="Đi đến ảnh 1"></button>
-                    <button class="dot" data-index="1" aria-label="Đi đến ảnh 2"></button>
-                    <button class="dot" data-index="2" aria-label="Đi đến ảnh 3"></button>
-                </div>
-            </div>
-        </section>
-        
-        <section class="feature-section">
-            <div class="container">
-                <div class="feature-content">
-                    <div class="feature-text">
-                        <div class="feature-logo-wrapper">
-                            <img src="/IMAGES/logo2.png" alt="Logo nhỏ Chắp Cánh Yêu Thương" class="feature-logo"  style=" border-radius: 30%;">
+
+        <main>
+            <section class="hero-slider">
+                <div class="wheel-container">
+                    <div class="wheel-slide">
+                        <div class="wheel-item">
+                            <img src="/IMAGES/denvaudituthien.jpeg" alt="Hình ảnh hoạt động từ thiện 1"
+                                style="min-height: 580px; min-width: 1400px;">
                         </div>
-                        <h2>Hành trình cùng em viết bước tới trường</h2>
-                        <p>
-                            Mỗi đóng góp, dù nhỏ bé, đều tiếp thêm sức mạnh cho các em học sinh có hoàn cảnh khó khăn
-                            được vững bước trên con đường học vấn. Cùng chúng tôi mang đến tương lai tươi sáng hơn cho các em.
-                        </p>
-                        <a href="cachoancanh.html" class="cta-button">Tìm hiểu thêm</a>
-                        <a href="lienhe.html" class="cta-button secondary">Quyên góp ngay</a>
+                        <div class="wheel-item">
+                            <img src="/IMAGES/anhdoanvienthiennguyen.jpg" alt="Hình ảnh hoạt động từ thiện 2">
+                        </div>
+                        <div class="wheel-item">
+                            <img src="/IMAGES/anhthiennguyen.webp"
+                                alt="Hình ảnh chương trình Hành trình cùng em viết bước tới trường">
+                        </div>
                     </div>
-                    <div class="feature-image">
-                        <img src="/IMAGES/treemdihoc.jpg" alt="Hỉnh ảnh trẻ em đi học" class="feature-img">
+                    <div class="wheel-nav">
+                        <button class="nav-button prev" aria-label="Ảnh trước">&#8249;</button>
+                        <button class="nav-button next" aria-label="Ảnh kế tiếp">&#8250;</button>
+                    </div>
+                    <div class="wheel-dots">
+                        <button class="dot active" data-index="0" aria-label="Đi đến ảnh 1"></button>
+                        <button class="dot" data-index="1" aria-label="Đi đến ảnh 2"></button>
+                        <button class="dot" data-index="2" aria-label="Đi đến ảnh 3"></button>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="partners-section">
-            <div class="container">
-                <h2 class="section-title partners-title">Nhà hảo tâm</h2>
-                <div class="partners-slider-wrapper">
-                    <button class="partner-nav-button prev" id="partnerPrevBtn" aria-label="Trước">&#8249;</button>
-                    <div class="partners-slider-viewport">
-                        <div class="partners-slider-track">
-                            <div class="partner-slide-page active">
-                                <div class="partner-item">
-                                    <a href="https://vku.udn.vn/vi/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/logo_vku.png" alt="Đối tác 1">
-                                    </a>
-                                </div>
-                                <div class="partner-item">
-                                    <a href="https://www.samsung.com/vn/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/samsung.png" alt="Đối tác 2">
-                                    </a>
-                                </div>
-                                <div class="partner-item">
-                                    <a href="https://www.vinamilk.com.vn/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/logo_vinamilkk.png" alt="Đối tác 3">
-                                    </a>
-                                </div>
+            <section class="feature-section">
+                <div class="container">
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <div class="feature-logo-wrapper">
+                                <img src="/IMAGES/logo2.png" alt="Logo nhỏ Chắp Cánh Yêu Thương" class="feature-logo"
+                                    style=" border-radius: 30%;">
                             </div>
-                            <div class="partner-slide-page">
-                                <div class="partner-item">
-                                    <a href="https://vingroup.net/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/logo_vingroup.png" alt="Đối tác 4">
-                                    </a>
-                                </div>
-                                <div class="partner-item">
-                                    <a href="https://www.nike.com/vn/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/nike.png" alt="Đối tác 5">
-                                    </a>
-                                </div>
-                                <div class="partner-item">
-                                    <a href="https://www.yakult.vn/" target="_blank" rel="noopener noreferrer">
-                                        <img src="/IMAGES/logo_yaku.png" alt="Đối tác 6">
-                                    </a>
-                                </div>
-                            </div>
-                            </div>
+                            <h2>Hành trình cùng em viết bước tới trường</h2>
+                            <p>
+                                Mỗi đóng góp, dù nhỏ bé, đều tiếp thêm sức mạnh cho các em học sinh có hoàn cảnh khó
+                                khăn
+                                được vững bước trên con đường học vấn. Cùng chúng tôi mang đến tương lai tươi sáng hơn
+                                cho các em.
+                            </p>
+                            <a href="cachoancanh.html" class="cta-button">Tìm hiểu thêm</a>
+                            <a href="/handofhope/quyen-gop" class="cta-button secondary">Quyên góp ngay</a>
+                        </div>
+                        <div class="feature-image">
+                            <img src="/IMAGES/treemdihoc.jpg" alt="Hỉnh ảnh trẻ em đi học" class="feature-img">
+                        </div>
                     </div>
-                    <button class="partner-nav-button next" id="partnerNextBtn" aria-label="Sau">&#8250;</button>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="activities-section" aria-labelledby="activities-title">
-            <div class="container">
-                <a href="cachoancanh.html">
-                    <h2 id="activities-title">Các Hoạt Động Khác</h2>
-                </a>
-               <p class="section-description">Nội dung về các hoạt động, dự án khác sẽ được cập nhật tại đây...</p>
-               <div class="activities-container">
-                       <div class="activity-card">
-                           <img src="/IMAGES/conduongdientruong.webp" alt="Tên hoạt động mẫu 1">
-                           <div class="activity-info">
-                               <h3>Cùng Em Đến Trường</h3>
-                               <p class="activity-time"><strong>Thời gian:</strong> Sắp diễn ra</p>
-                               <div class="activity-members">
-                                   <strong>Thành viên:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 50%;">50%</div>
-                                   </div>
-                                   <p class="progress-bar-text">10 / 20 thành viên</p>
-                               </div>
-                               <div class="activity-donations">
-                                   <strong>Số tiền ủng hộ:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 75%;">75%</div>
-                                   </div>
-                                   <p class="progress-bar-text">15.000.000 VNĐ / 20.000.000 VNĐ</p>
-                               </div>
-                               <a href="#" class="details-button">Chi tiết</a>
-                           </div>
-                       </div>
-                       <div class="activity-card">
-                           <img src="/IMAGES/diemtruong.jpg" alt="Tên hoạt động mẫu 2">
-                           <div class="activity-info">
-                               <h3>Xây Ước Mơ - Dựng Mái Trường</h3>
-                               <p class="activity-time"><strong>Thời gian:</strong> Sắp diễn ra</p>
-                               <div class="activity-members">
-                                   <strong>Thành viên:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 80%;">80%</div>
-                                   </div>
-                                   <p class="progress-bar-text">24 / 30 thành viên</p>
-                               </div>
-                               <div class="activity-donations">
-                                   <strong>Số tiền ủng hộ:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 60%;">60%</div>
-                                   </div>
-                                   <p class="progress-bar-text">120.000.000 VNĐ / 200.000.000 VNĐ</p>
-                               </div>
-                               <a href="#" class="details-button">Chi tiết</a>
-                           </div>
-                       </div>
-                       <div class="activity-card">
-                           <img src="/IMAGES/macaoam.webp" alt="Tên hoạt động mẫu 3">
-                           <div class="activity-info">
-                               <h3>Áo Ấm Mùa Đông</h3>
-                               <p class="activity-time"><strong>Thời gian:</strong> Đã kết thúc</p>
-                               <div class="activity-members">
-                                   <strong>Thành viên:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 100%;">100%</div>
-                                   </div>
-                                   <p class="progress-bar-text">15 / 15 thành viên</p>
-                               </div>
-                               <div class="activity-donations">
-                                   <strong>Số tiền ủng hộ:</strong>
-                                   <div class="progress-bar-container">
-                                       <div class="progress-bar" style="width: 100%;">100%</div>
-                                   </div>
-                                   <p class="progress-bar-text">20.000.000 VNĐ / 20.000.000 VNĐ</p>
-                               </div>
-                               <a href="#" class="details-button">Chi tiết</a>
-                           </div>
-                       </div>
-               </div>
-            </div>
-       </section>
+            <section class="partners-section">
+                <div class="container">
+                    <h2 class="section-title partners-title">Nhà hảo tâm</h2>
+                    <div class="partners-slider-wrapper">
+                        <button class="partner-nav-button prev" id="partnerPrevBtn" aria-label="Trước">&#8249;</button>
+                        <div class="partners-slider-viewport">
+                            <div class="partners-slider-track">
+                                <div class="partner-slide-page active">
+                                    <div class="partner-item">
+                                        <a href="https://vku.udn.vn/vi/" target="_blank" rel="noopener noreferrer">
+                                            <img src="/IMAGES/logo_vku.png" alt="Đối tác 1">
+                                        </a>
+                                    </div>
+                                    <div class="partner-item">
+                                        <a href="https://www.samsung.com/vn/" target="_blank" rel="noopener noreferrer">
+                                            <img src="/IMAGES/samsung.png" alt="Đối tác 2">
+                                        </a>
+                                    </div>
+                                    <div class="partner-item">
+                                        <a href="https://www.vinamilk.com.vn/" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <img src="/IMAGES/logo_vinamilkk.png" alt="Đối tác 3">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="partner-slide-page">
+                                    <div class="partner-item">
+                                        <a href="https://vingroup.net/" target="_blank" rel="noopener noreferrer">
+                                            <img src="/IMAGES/logo_vingroup.png" alt="Đối tác 4">
+                                        </a>
+                                    </div>
+                                    <div class="partner-item">
+                                        <a href="https://www.nike.com/vn/" target="_blank" rel="noopener noreferrer">
+                                            <img src="/IMAGES/nike.png" alt="Đối tác 5">
+                                        </a>
+                                    </div>
+                                    <div class="partner-item">
+                                        <a href="https://www.yakult.vn/" target="_blank" rel="noopener noreferrer">
+                                            <img src="/IMAGES/logo_yaku.png" alt="Đối tác 6">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="partner-nav-button next" id="partnerNextBtn" aria-label="Sau">&#8250;</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="activities-section" aria-labelledby="activities-title">
+                <div class="container">
+                    <a href="cachoancanh.html">
+                        <h2 id="activities-title">Các Hoạt Động Khác</h2>
+                    </a>
+                    <p class="section-description">Nội dung về các hoạt động, dự án khác sẽ được cập nhật tại đây...</p>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <img src="/IMAGES/conduongdientruong.webp" alt="Tên hoạt động mẫu 1">
+                            <div class="activity-info">
+                                <h3>Cùng Em Đến Trường</h3>
+                                <p class="activity-time"><strong>Thời gian:</strong> Sắp diễn ra</p>
+                                <div class="activity-members">
+                                    <strong>Thành viên:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 50%;">50%</div>
+                                    </div>
+                                    <p class="progress-bar-text">10 / 20 thành viên</p>
+                                </div>
+                                <div class="activity-donations">
+                                    <strong>Số tiền ủng hộ:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 75%;">75%</div>
+                                    </div>
+                                    <p class="progress-bar-text">15.000.000 VNĐ / 20.000.000 VNĐ</p>
+                                </div>
+                                <!-- <a href="#" class="details-button">Chi tiết</a> -->
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <img src="/IMAGES/diemtruong.jpg" alt="Tên hoạt động mẫu 2">
+                            <div class="activity-info">
+                                <h3>Xây Ước Mơ - Dựng Mái Trường</h3>
+                                <p class="activity-time"><strong>Thời gian:</strong> Sắp diễn ra</p>
+                                <div class="activity-members">
+                                    <strong>Thành viên:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 80%;">80%</div>
+                                    </div>
+                                    <p class="progress-bar-text">24 / 30 thành viên</p>
+                                </div>
+                                <div class="activity-donations">
+                                    <strong>Số tiền ủng hộ:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 60%;">60%</div>
+                                    </div>
+                                    <p class="progress-bar-text">120.000.000 VNĐ / 200.000.000 VNĐ</p>
+                                </div>
+                                <!-- <a href="#" class="details-button">Chi tiết</a> -->
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <img src="/IMAGES/macaoam.webp" alt="Tên hoạt động mẫu 3">
+                            <div class="activity-info">
+                                <h3>Áo Ấm Mùa Đông</h3>
+                                <p class="activity-time"><strong>Thời gian:</strong> Đã kết thúc</p>
+                                <div class="activity-members">
+                                    <strong>Thành viên:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                    </div>
+                                    <p class="progress-bar-text">15 / 15 thành viên</p>
+                                </div>
+                                <div class="activity-donations">
+                                    <strong>Số tiền ủng hộ:</strong>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                    </div>
+                                    <p class="progress-bar-text">20.000.000 VNĐ / 20.000.000 VNĐ</p>
+                                </div>
+                                <!-- <a href="#" class="details-button">Chi tiết</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
-    <div class="line"></div>
-    
-    <section class="story-of-the-month-section">
-        <div class="container">
-            <a href="cachoancanh.html">            
-                <h2 class="section-title" >HÀNH TRÌNH CỦA THÁNG</h2>
-            </a>
-            <div class="story-grid">
-                <div class="story-item">
-                    <div class="story-image-wrapper">
-                        <img src="/IMAGES/ngonc.jpg" alt="Lê Nguyễn Bảo Ngọc">
-                    </div>
-                    <div class="story-content">
-                        <span class="story-type">Hoàn cảnh khó khăn</span>
-                        <h3 class="story-name">LÊ NGUYỄN BẢO NGỌC</h3>
-                        <div class="story-meta">
-                            <span class="story-code">ĐL001</span>
+        <div class="line"></div>
+
+        <section class="story-of-the-month-section">
+            <div class="container">
+                <a href="cachoancanh.html">
+                    <h2 class="section-title">HÀNH TRÌNH CỦA THÁNG</h2>
+                </a>
+                <div class="story-grid">
+                    <div class="story-item">
+                        <div class="story-image-wrapper">
+                            <img src="/IMAGES/ngonc.jpg" alt="Lê Nguyễn Bảo Ngọc">
+                        </div>
+                        <div class="story-content">
+                            <span class="story-type">Hoàn cảnh khó khăn</span>
+                            <h3 class="story-name">LÊ NGUYỄN BẢO NGỌC</h3>
+                            <div class="story-meta">
+                                <span class="story-code">ĐL001</span>
                             </div>
-                        <a href="#" class="cta-button story-cta">Chi tiết</a>
-                    </div>
-                </div>
-
-                <div class="story-item">
-                    <div class="story-image-wrapper">
-                        <img src="/IMAGES/quy.jpg" alt="Nguyễn Ngọc Quý">
-                    </div>
-                    <div class="story-content">
-                        <span class="story-type">Hoàn cảnh khó khăn</span>
-                        <h3 class="story-name">NGUYỄN NGỌC QUÝ</h3>
-                        <div class="story-meta">
-                            <span class="story-code">ĐL002</span>
+                            <a href="/handofhope/hc1" class="cta-button story-cta">Chi tiết</a>
                         </div>
-                        <a href="#" class="cta-button story-cta">Chi tiết</a>
                     </div>
-                </div>
 
-                <div class="story-item">
-                    <div class="story-image-wrapper">
-                        <img src="/IMAGES/quyen.jpg" alt="Dương Ngọc Diễm Quyên">
-                    </div>
-                    <div class="story-content">
-                        <span class="story-type">Hoàn cảnh khó khăn</span>
-                        <h3 class="story-name">DƯƠNG NGỌC DIỄM QUYÊN</h3>
-                        <div class="story-meta">
-                            <span class="story-code">ĐL003</span>
+                    <div class="story-item">
+                        <div class="story-image-wrapper">
+                            <img src="/IMAGES/quy.jpg" alt="Nguyễn Ngọc Quý">
                         </div>
-                        <a href="#" class="cta-button story-cta">Chi tiết</a>
+                        <div class="story-content">
+                            <span class="story-type">Hoàn cảnh khó khăn</span>
+                            <h3 class="story-name">NGUYỄN NGỌC QUÝ</h3>
+                            <div class="story-meta">
+                                <span class="story-code">ĐL002</span>
+                            </div>
+                            <a href="/handofhope/hc2" class="cta-button story-cta">Chi tiết</a>
+                        </div>
+                    </div>
+
+                    <div class="story-item">
+                        <div class="story-image-wrapper">
+                            <img src="/IMAGES/quyen.jpg" alt="Dương Ngọc Diễm Quyên">
+                        </div>
+                        <div class="story-content">
+                            <span class="story-type">Hoàn cảnh khó khăn</span>
+                            <h3 class="story-name">DƯƠNG NGỌC DIỄM QUYÊN</h3>
+                            <div class="story-meta">
+                                <span class="story-code">ĐL003</span>
+                            </div>
+                            <a href="/handofhope/hc3" class="cta-button story-cta">Chi tiết</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-        </div>
-    </section>
-    <script src="/js/leaderboard.js"></script>
+            </div>
+        </section>
+        <script src="/js/leaderboard.js"></script>
 
-    
-    <%- include('partials/footer.ejs') %>
 
-    <script>
-    // Function cho header scroll (giữ nguyên)
-        
-            
+        <%- include('partials/footer.ejs') %>
 
-        // Function để active link menu (ĐÃ CẬP NHẬT)
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPath = window.location.pathname; // Lấy toàn bộ path, ví dụ: "/handofhope/trangchu"
-            const navLinks = document.querySelectorAll('.main-nav .nav-link');
+            <script>
+                // Function cho header scroll (giữ nguyên)
 
-            navLinks.forEach(link => {
-                link.classList.remove('active'); // Xóa class active khỏi tất cả các link trước
 
-                const linkHref = link.getAttribute('href');
 
-                // So sánh trực tiếp currentPath với href của link
-                if (linkHref === currentPath) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    document.addEventListener('DOMContentLoaded', function() {
-            const wheelContainer = document.querySelector('.wheel-container');
-            if (!wheelContainer) return; 
+                // Function để active link menu (ĐÃ CẬP NHẬT)
+                document.addEventListener('DOMContentLoaded', function () {
+                    const currentPath = window.location.pathname; // Lấy toàn bộ path, ví dụ: "/handofhope/trangchu"
+                    const navLinks = document.querySelectorAll('.main-nav .nav-link');
 
-            const wheelSlide = wheelContainer.querySelector('.wheel-slide');
-            const wheelItems = wheelContainer.querySelectorAll('.wheel-item');
-            const prevButton = wheelContainer.querySelector('.prev');
-            const nextButton = wheelContainer.querySelector('.next');
-            const dotsContainer = wheelContainer.querySelector('.wheel-dots');
-            const dots = wheelContainer.querySelectorAll('.dot');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active'); // Xóa class active khỏi tất cả các link trước
 
-            if (!wheelSlide || wheelItems.length === 0 || !prevButton || !nextButton || !dotsContainer || dots.length === 0) {
-                console.error("Slider elements missing.");
-                return;
-            }
+                        const linkHref = link.getAttribute('href');
 
-            let counter = 0;
-            let slideWidth = wheelItems[0].offsetWidth; 
-
-            function updateSlideWidth() {
-                 slideWidth = wheelItems[0].offsetWidth; 
-                 goToSlide(counter, false); 
-            }
-
-            function goToSlide(index, transition = true) {
-                if (index < 0) {
-                    counter = wheelItems.length - 1;
-                } else if (index >= wheelItems.length) {
-                    counter = 0;
-                } else {
-                    counter = index;
-                }
-                wheelSlide.style.transition = transition ? 'transform 0.5s ease-in-out' : 'none';
-                wheelSlide.style.transform = `translateX(${-slideWidth * counter}px)`;
-                updateDots();
-            }
-
-            function nextSlide() {
-                goToSlide(counter + 1);
-            }
-
-            function prevSlide() {
-                goToSlide(counter - 1);
-            }
-
-            function updateDots() {
-                dots.forEach(dot => dot.classList.remove('active'));
-                dots[counter].classList.add('active');
-            }
-
-            nextButton.addEventListener('click', nextSlide);
-            prevButton.addEventListener('click', prevSlide);
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const index = parseInt(dot.getAttribute('data-index'));
-                    goToSlide(index);
-                });
-            });
-            updateSlideWidth(); 
-            let autoSlideInterval = setInterval(nextSlide, 4000);
-            wheelContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-            wheelContainer.addEventListener('mouseleave', () => autoSlideInterval = setInterval(nextSlide, 4400));
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const sliderWrapper = document.querySelector('.partners-slider-wrapper');
-            if (sliderWrapper) {
-                const track = sliderWrapper.querySelector('.partners-slider-track');
-                const slides = Array.from(track.querySelectorAll('.partner-slide-page'));
-                const prevButton = sliderWrapper.querySelector('#partnerPrevBtn');
-                const nextButton = sliderWrapper.querySelector('#partnerNextBtn');
-                let currentSlideIndex = 0;
-
-                if (slides.length > 0 && prevButton && nextButton) {
-                    function updateSlider() {
-                        track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-                        slides.forEach((slide, index) => {
-                            slide.classList.toggle('active', index === currentSlideIndex);
-                        });
-                        if (slides.length <= 1) {
-                            prevButton.disabled = true;
-                            nextButton.disabled = true;
-                        } else {
-                            prevButton.disabled = false; 
-                            nextButton.disabled = false; 
+                        // So sánh trực tiếp currentPath với href của link
+                        if (linkHref === currentPath) {
+                            link.classList.add('active');
                         }
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function () {
+                    const wheelContainer = document.querySelector('.wheel-container');
+                    if (!wheelContainer) return;
+
+                    const wheelSlide = wheelContainer.querySelector('.wheel-slide');
+                    const wheelItems = wheelContainer.querySelectorAll('.wheel-item');
+                    const prevButton = wheelContainer.querySelector('.prev');
+                    const nextButton = wheelContainer.querySelector('.next');
+                    const dotsContainer = wheelContainer.querySelector('.wheel-dots');
+                    const dots = wheelContainer.querySelectorAll('.dot');
+
+                    if (!wheelSlide || wheelItems.length === 0 || !prevButton || !nextButton || !dotsContainer || dots.length === 0) {
+                        console.error("Slider elements missing.");
+                        return;
                     }
 
-                    prevButton.addEventListener('click', function() {
-                        currentSlideIndex--;
-                        if (currentSlideIndex < 0) {
-                            currentSlideIndex = slides.length - 1; 
-                        }
-                        updateSlider();
-                    });
+                    let counter = 0;
+                    let slideWidth = wheelItems[0].offsetWidth;
 
-                    nextButton.addEventListener('click', function() {
-                        currentSlideIndex++;
-                        if (currentSlideIndex >= slides.length) {
-                            currentSlideIndex = 0; 
+                    function updateSlideWidth() {
+                        slideWidth = wheelItems[0].offsetWidth;
+                        goToSlide(counter, false);
+                    }
+
+                    function goToSlide(index, transition = true) {
+                        if (index < 0) {
+                            counter = wheelItems.length - 1;
+                        } else if (index >= wheelItems.length) {
+                            counter = 0;
+                        } else {
+                            counter = index;
                         }
-                        updateSlider();
+                        wheelSlide.style.transition = transition ? 'transform 0.5s ease-in-out' : 'none';
+                        wheelSlide.style.transform = `translateX(${-slideWidth * counter}px)`;
+                        updateDots();
+                    }
+
+                    function nextSlide() {
+                        goToSlide(counter + 1);
+                    }
+
+                    function prevSlide() {
+                        goToSlide(counter - 1);
+                    }
+
+                    function updateDots() {
+                        dots.forEach(dot => dot.classList.remove('active'));
+                        dots[counter].classList.add('active');
+                    }
+
+                    nextButton.addEventListener('click', nextSlide);
+                    prevButton.addEventListener('click', prevSlide);
+
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', () => {
+                            const index = parseInt(dot.getAttribute('data-index'));
+                            goToSlide(index);
+                        });
                     });
-                    updateSlider();
-                }
-            }
-        });
-</script>
+                    updateSlideWidth();
+                    let autoSlideInterval = setInterval(nextSlide, 4000);
+                    wheelContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+                    wheelContainer.addEventListener('mouseleave', () => autoSlideInterval = setInterval(nextSlide, 4400));
+                });
+                document.addEventListener('DOMContentLoaded', function () {
+                    const sliderWrapper = document.querySelector('.partners-slider-wrapper');
+                    if (sliderWrapper) {
+                        const track = sliderWrapper.querySelector('.partners-slider-track');
+                        const slides = Array.from(track.querySelectorAll('.partner-slide-page'));
+                        const prevButton = sliderWrapper.querySelector('#partnerPrevBtn');
+                        const nextButton = sliderWrapper.querySelector('#partnerNextBtn');
+                        let currentSlideIndex = 0;
+
+                        if (slides.length > 0 && prevButton && nextButton) {
+                            function updateSlider() {
+                                track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+                                slides.forEach((slide, index) => {
+                                    slide.classList.toggle('active', index === currentSlideIndex);
+                                });
+                                if (slides.length <= 1) {
+                                    prevButton.disabled = true;
+                                    nextButton.disabled = true;
+                                } else {
+                                    prevButton.disabled = false;
+                                    nextButton.disabled = false;
+                                }
+                            }
+
+                            prevButton.addEventListener('click', function () {
+                                currentSlideIndex--;
+                                if (currentSlideIndex < 0) {
+                                    currentSlideIndex = slides.length - 1;
+                                }
+                                updateSlider();
+                            });
+
+                            nextButton.addEventListener('click', function () {
+                                currentSlideIndex++;
+                                if (currentSlideIndex >= slides.length) {
+                                    currentSlideIndex = 0;
+                                }
+                                updateSlider();
+                            });
+                            updateSlider();
+                        }
+                    }
+                });
+            </script>
 </body>
+
 </html>

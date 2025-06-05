@@ -1,0 +1,101 @@
+/* Sử dụng CSS variables từ main_bar.css */
+:root {
+    --primary-color: #4CAF50;
+    --text-color: #333;
+    --bg-color: #f8f9fa;
+}
+
+.mota-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mota-profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.mota-profile-header img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.mota-profile-header h1 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.mota-profile-header .code {
+    font-size: 1em;
+    color: #777;
+}
+
+.mota-content h2 {
+    color: var(--text-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.mota-content p {
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.mota-qr-code-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.mota-qr-code-section img {
+    width: 330px;
+    height: 530px;
+    margin: 10px auto;
+    display: block;
+    object-fit: contain;
+}
+
+.mota-qr-code-section p {
+    margin-bottom: 5px;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #333;
+}

@@ -72,10 +72,18 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
             joinedPostIds = joins.map(j => j.post_id);
         }
 
+        // LẤY DỮ LIỆU LEADERBOARD
+        const leaderboard = await User.findAll({
+            attributes: ['id', 'username', 'full_name', 'avatar_url', 'volunpoints'],
+            order: [['volunpoints', 'DESC']],
+            limit: 5
+        });
+
         res.render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts,
             joinedPostIds,
+            leaderboard, // TRUYỀN THÊM BIẾN NÀY
             success_msg: req.query.success_msg,
             error_msg: req.query.error_msg
         });
@@ -84,6 +92,7 @@ app.get('/handofhope/hanh-trinh', async (req, res) => {
         res.status(500).render('hanhtrinh', {
             pageTitle: 'Hành Trình - Hands of Hope',
             posts: [],
+            leaderboard: [],
             error_msg: 'Không thể tải danh sách bài đăng.'
         });
     }
@@ -95,6 +104,18 @@ app.get('/handofhope/lien-he', (req, res) => {
 
 app.get('/handofhope/quyen-gop', (req, res) => {
     res.render('quyengop', { pageTitle: 'Quyên Góp - Hands of Hope' });
+});
+
+app.get('/handofhope/hc1', (req, res) => {
+    res.render('hc1', { pageTitle: 'Hoàn cảnh 1 - Hands of Hope' });
+});
+
+app.get('/handofhope/hc2', (req, res) => {
+    res.render('hc2', { pageTitle: 'Hoàn cảnh 2 - Hands of Hope' });
+});
+
+app.get('/handofhope/hc3', (req, res) => {
+    res.render('hc3', { pageTitle: 'Hoàn cảnh 2 - Hands of Hope' });
 });
 
 // Route GET trang đăng nhập
