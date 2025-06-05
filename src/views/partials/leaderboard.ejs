@@ -1,15 +1,3 @@
-<!-- <div id="leaderboard-popup" class="leaderboard-popup-container" >
-    <div class="leaderboard-header">
-        <h3>🏆Bảng Xếp Hạng</h3>
-        <button id="close-leaderboard-btn" class="close-leaderboard-button">&times;</button>
-    </div>
-    <div id="leaderboard-content" class="leaderboard-list">
-        <p class="leaderboard-loading">Đang tải bảng xếp hạng...</p>
-    </div>
-    <p class="leaderboard-footer">
-        Bảng xếp hạng sẽ tự động ẩn sau khi đóng.
-    </p>
-</div> -->
 
 <%
 
@@ -20,7 +8,8 @@ var currentUserLeaderboard = typeof currentUserLeaderboard !== 'undefined' ? cur
 
 <aside class="leaderboard-section">
     <h3 class="leaderboard-title">
-        <i class="fas fa-trophy"></i> Bảng Vàng Tri Ân
+        <!-- <i class="fas fa-trophy"></i>  -->
+        🏆 Bảng Vàng Tri Ân
     </h3>
     <p class="leaderboard-subtitle">Vinh danh những trái tim vàng đã đóng góp tích cực</p>
     <p class="leaderboard-subtitle"></p>
@@ -44,7 +33,7 @@ var currentUserLeaderboard = typeof currentUserLeaderboard !== 'undefined' ? cur
                     <div class="leaderboard-user-info">
                         <span class="leaderboard-name"><%= user.full_name %></span>
                         <span class="leaderboard-points">
-                            <i class="fas fa-star points-icon"></i> <%= user.points || 0 %> điểm
+                            <i class="fas fa-star points-icon"></i> <%= user.volunpoints || 0 %> điểm
                         </span>
                     </div>
                     <% if (user.rank <= 3) { %>
@@ -64,7 +53,7 @@ var currentUserLeaderboard = typeof currentUserLeaderboard !== 'undefined' ? cur
                      <div class="leaderboard-user-info">
                          <span class="leaderboard-name"><%= currentUserLeaderboard.full_name %> (Bạn)</span>
                          <span class="leaderboard-points">
-                             <i class="fas fa-star points-icon"></i> <%= currentUserLeaderboard.points || 0 %> điểm
+                             <i class="fas fa-star points-icon"></i> <%= currentUserLeaderboard.volunpoints || 0 %> điểm
                          </span>
                      </div>
                 </div>

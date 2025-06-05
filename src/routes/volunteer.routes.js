@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const cloudinary = require('../config/cloudinary.config');
 const fs = require('fs');
-
+const sequelize = require('../config/database'); // Thêm dòng này
 const upload = multer({ dest: 'uploads/' });
 // Middleware kiểm tra đăng nhập
 function requireLogin(req, res, next) {
@@ -100,19 +100,35 @@ router.get('/danh-sach', async (req, res) => {
 // POST: Tham gia bài tuyển và gửi email
 router.post('/tham-gia/:postId', requireLogin, async (req, res) => {
     const postId = req.params.postId;
-    const userId = req.session.user.id;
-
-    try {
+    const userId = req.session.user.id;    try {
         // Kiểm tra đã tham gia chưa
         const existed = await VolunteerJoin.findOne({ where: { user_id: userId, post_id: postId } });
         if (existed) {
             return res.redirect('/handofhope/hanh-trinh?error_msg=' + encodeURIComponent('Bạn đã tham gia hoạt động này.'));
         }
 
-        // Tạo bản ghi tham gia
-        await VolunteerJoin.create({ user_id: userId, post_id: postId });
+        // Sử dụng transaction để đảm bảo tính nhất quán
+        await sequelize.transaction(async (t) => {
+            // Tạo bản ghi tham gia
+            await VolunteerJoin.create({ 
+                user_id: userId, 
+                post_id: postId 
+            }, { transaction: t });
 
-        // Lấy thông tin người dùng
+            // Cộng 1 điểm cho user
+            await User.increment('volunpoints', { 
+                by: 1,
+                where: { id: userId },
+                transaction: t 
+            });
+        });
+
+        // Cập nhật điểm trong session
+        if (req.session.user) {
+            req.session.user.volunpoints = (req.session.user.volunpoints || 0) + 1;
+        }
+
+        // Lấy thông tin người dùng đã được cập nhật
         const user = await User.findByPk(userId);
         // Lấy thông tin bài viết
         const post = await VolunteerPost.findByPk(postId);
