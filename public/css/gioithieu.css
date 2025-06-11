@@ -301,9 +301,10 @@
 }
 
 .feature-icon {
-    width: 60px; /* Điều chỉnh kích thước icon */
-    height: 60px;
+    width: 320px; /* Điều chỉnh kích thước icon */
+    height: 200px;
     margin-bottom: 15px;
+    overflow: hidden;
 }
 
 .our-impact ul {
